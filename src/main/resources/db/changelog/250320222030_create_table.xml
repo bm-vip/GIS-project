@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="250320222030-1" author="b.mohamadi">
+        <createSequence incrementBy="1" sequenceName="seq_company" startValue="1"/>
+    </changeSet>
+    <changeSet id="250320222030-2" author="b.mohamadi">
+        <createSequence incrementBy="1" sequenceName="seq_station" startValue="1"/>
+    </changeSet>
+    <changeSet id="250320222030-3" author="b.mohamadi">
+        <createTable tableName="tbl_company">
+            <column name="id" type="${idType}">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_tbl_company"/>
+            </column>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column name="created_date" type="DATETIME"/>
+            <column name="modified_by" type="VARCHAR(255)"/>
+            <column name="modified_date" type="DATETIME"/>
+            <column defaultValueNumeric="0" name="version" type="integer"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="parent_company_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="250320222030-4" author="b.mohamadi">
+        <createTable tableName="tbl_station">
+            <column name="id" type="${idType}">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_tbl_station"/>
+            </column>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column name="created_date" type="DATETIME"/>
+            <column name="modified_by" type="VARCHAR(255)"/>
+            <column name="modified_date" type="DATETIME"/>
+            <column defaultValueNumeric="0" name="version" type="integer"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="latitude" type="${doubleType}"/>
+            <column name="longitude" type="${doubleType}"/>
+            <column name="company_id" type="bigint"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="250320222030-5" author="b.mohamadi">
+        <addForeignKeyConstraint baseColumnNames="parent_company_id" baseTableName="tbl_company"
+                                 constraintName="FK_TBL_PARENT_COMPANY_ID" referencedColumnNames="id"
+                                 referencedTableName="tbl_company"/>
+    </changeSet>
+    <changeSet id="250320222030-6" author="b.mohamadi">
+        <addForeignKeyConstraint baseColumnNames="company_id" baseTableName="tbl_station"
+                                 constraintName="FK_TBL_STATION_ON_COMPANY" referencedColumnNames="id"
+                                 referencedTableName="tbl_company"/>
+    </changeSet>
+
+</databaseChangeLog>
