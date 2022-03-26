@@ -27,7 +27,8 @@ public class CompanyServiceImpl extends BaseServiceImpl<CompanyModel, CompanyEnt
 
     @Override
     public CompanyModel findByParentId(Long parentId) {
-        return mapper.toModel(repository.findByParentId(parentId).orElseThrow(ResourceNotFoundException::new));
+        CompanyModel companyModel = mapper.toModel(repository.findByParentId(parentId).orElseThrow(ResourceNotFoundException::new));
+        return companyModel;
     }
 
     @Override

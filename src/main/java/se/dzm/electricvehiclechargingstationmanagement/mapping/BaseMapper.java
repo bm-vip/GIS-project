@@ -12,6 +12,5 @@ public interface BaseMapper<M,E> {
     List<E> toEntity(final List<M> models);
 
     E updateEntity(M dto, @MappingTarget E entity);
-
-    List<E> updateEntityList(List<M> dtoList, @MappingTarget List<E> entityList);
+    List<E> updateEntity(List<M> dtoList, @MappingTarget List<E> entityList);
 }

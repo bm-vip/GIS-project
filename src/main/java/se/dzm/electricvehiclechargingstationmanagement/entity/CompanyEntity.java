@@ -1,8 +1,10 @@
 package se.dzm.electricvehiclechargingstationmanagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
 * Created by Behrooz.Mohamadi on 24/03/2022.
@@ -25,7 +27,9 @@ public class CompanyEntity extends BaseEntity<Long> {
     @JoinColumn(name = "parent_company_id")
     private CompanyEntity parent;
 
-
+    @JsonIgnore
+    @OneToMany(mappedBy="company")
+    private List<StationEntity> stationList;
 
     @Override
     public String getSelectTitle() {

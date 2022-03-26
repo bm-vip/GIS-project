@@ -13,4 +13,5 @@ public class StationModel extends BaseModel<Long> {
     private Double latitude;
     private Double longitude;
     private CompanyModel company;
+    private Double distance;
 }
