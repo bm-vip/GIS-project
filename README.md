@@ -35,7 +35,7 @@ hierarchically. For example, we got 3 companies A, B and C accordingly with 10,5
 stations. Company B belongs to A and company C belongs to B. Then we can say that
 company A has 17, company B has 7 and company C has 2 stations in total.
 
-###The database schema for start point:
+### The database schema for start point:
 * `1. Station (id, name, latitude, longitude, company_id)`
 * `2. Company (id, parent_company_id, name)`
 
