@@ -36,8 +36,8 @@ stations. Company B belongs to A and company C belongs to B. Then we can say tha
 company A has 17, company B has 7 and company C has 2 stations in total.
 
 ### The database schema for start point:
-* `1. Station (id, name, latitude, longitude, company_id)`
-* `2. Company (id, parent_company_id, name)`
+* `Station (id, name, latitude, longitude, company_id)`
+* `Company (id, parent_company_id, name)`
 
 You should make a git repository and commit as frequently as you can.
 
