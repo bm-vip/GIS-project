@@ -10,7 +10,7 @@
     </parent>
     <groupId>se.dzm</groupId>
     <artifactId>electric-vehicle-charging-station-management</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <name>electric-vehicle-charging-station-management</name>
     <description>electric-vehicle-charging-station-management</description>
     <properties>
