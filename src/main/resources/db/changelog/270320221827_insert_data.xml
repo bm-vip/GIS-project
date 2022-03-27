@@ -8,7 +8,7 @@
 
     <changeSet id="270320221827-1" author="b.mohamadi">
         <loadData file="db/data/tbl_company.csv" tableName = "tbl_company" >
-            <column header="id" name="id" type="${idType}"/>
+            <column header="id" name="id" type="bigint" />
             <column header="created_by" name="created_by" type="VARCHAR(255)"/>
             <column header="created_date" name="created_date" type="DATETIME"/>
             <column header="modified_by" name="modified_by" type="VARCHAR(255)"/>
@@ -21,7 +21,7 @@
 
     <changeSet id="270320221827-2" author="b.mohamadi">
         <loadData file="db/data/tbl_station.csv" tableName = "tbl_station" >
-            <column header="id" name="id" type="${idType}"/>
+            <column header="id" name="id" type="bigint" />
             <column header="created_by" name="created_by" type="VARCHAR(255)"/>
             <column header="created_date" name="created_date" type="DATETIME"/>
             <column header="modified_by" name="modified_by" type="VARCHAR(255)"/>
@@ -32,5 +32,13 @@
             <column header="lng" name="lng" type="${doubleType}"/>
             <column header="company_id" name="company_id" type="bigint"/>
         </loadData>
+    </changeSet>
+
+    <changeSet id="270320221827-3" author="b.mohamadi">
+        <sql dbms="postgresql">select setval('seq_company', max(id)+1) from tbl_company</sql>
+        <sql dbms="h2">alter sequence seq_company restart with (select max(id)+1 from tbl_company)</sql>
+
+        <sql dbms="postgresql">select setval('seq_station', max(id)+1) from tbl_station</sql>
+        <sql dbms="h2">alter sequence seq_station restart with (select max(id)+1 from tbl_station)</sql>
     </changeSet>
 </databaseChangeLog>

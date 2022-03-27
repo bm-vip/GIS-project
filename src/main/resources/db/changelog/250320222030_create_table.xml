@@ -13,7 +13,7 @@
     </changeSet>
     <changeSet id="250320222030-3" author="b.mohamadi">
         <createTable tableName="tbl_company">
-            <column name="id" type="${idType}">
+            <column name="id" type="bigint">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_tbl_company"/>
             </column>
             <column name="created_by" type="VARCHAR(255)"/>
@@ -29,7 +29,7 @@
     </changeSet>
     <changeSet id="250320222030-4" author="b.mohamadi">
         <createTable tableName="tbl_station">
-            <column name="id" type="${idType}">
+            <column name="id" type="bigint">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_tbl_station"/>
             </column>
             <column name="created_by" type="VARCHAR(255)"/>

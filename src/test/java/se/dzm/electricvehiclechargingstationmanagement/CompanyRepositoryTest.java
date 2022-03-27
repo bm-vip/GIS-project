@@ -7,15 +7,18 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.annotation.Commit;
+import org.springframework.test.context.ActiveProfiles;
 import se.dzm.electricvehiclechargingstationmanagement.entity.CompanyEntity;
 import se.dzm.electricvehiclechargingstationmanagement.repository.CompanyRepository;
 
 import java.util.List;
 import java.util.Optional;
 
+@ActiveProfiles("test")
 @DataJpaTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CompanyRepositoryTest {
@@ -46,7 +49,7 @@ public class CompanyRepositoryTest {
         Optional<CompanyEntity> optional = companyRepository.findById(1L);
 
         Assertions.assertThat(optional).isPresent();
-        Assertions.assertThat(optional.get().getName()).isEqualTo("test company");
+        Assertions.assertThat(optional.get().getName()).isEqualTo("company A");
     }
 
     @Test
@@ -54,22 +57,22 @@ public class CompanyRepositoryTest {
     public void findAllCompanyTest() {
         List<CompanyEntity> all = companyRepository.findAll();
 
-        Assertions.assertThat(all.size()).isGreaterThan(1);
+        Assertions.assertThat(all).isNotEmpty().size().isEqualTo(5);
     }
     @Test
     @Order(4)
     public void findCompanyByParentIdTest() {
-        Page<CompanyEntity> companyEntityPage = companyRepository.findByParentId(1L, Pageable.ofSize(10));
+        Page<CompanyEntity> companyEntityPage = companyRepository.findByParentId(4L, Pageable.ofSize(10));
 
-        Assertions.assertThat(companyEntityPage.getTotalElements()).isGreaterThan(0);
-        Assertions.assertThat(companyEntityPage.getContent().get(1).getName()).isEqualTo("test child company");
+        Assertions.assertThat(companyEntityPage.getTotalElements()).isEqualTo(1);
+        Assertions.assertThat(companyEntityPage.getContent().get(0).getName()).isEqualTo("test child company");
     }
 
     @Test
     @Order(5)
     @Commit
     public void updateCompanyTest(){
-        CompanyEntity companyEntity = companyRepository.findById(1L).get();
+        CompanyEntity companyEntity = companyRepository.findById(4L).get();
         companyEntity.setName("new company test");
         CompanyEntity companyUpdated = companyRepository.save(companyEntity);
 
@@ -80,9 +83,9 @@ public class CompanyRepositoryTest {
     @Order(6)
     @Commit
     public void deleteCompanyTest(){
-        companyRepository.deleteAll();
-        Optional<CompanyEntity> optional = companyRepository.findById(1L);
+        companyRepository.deleteById(5L);
+        Optional<CompanyEntity> optional = companyRepository.findById(5L);
 
-        Assertions.assertThat(optional.isEmpty()).isTrue();
+        Assertions.assertThat(optional).isEmpty();
     }
 }

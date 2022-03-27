@@ -50,7 +50,7 @@ public class StationRepositoryTest {
         Optional<StationEntity> optional = stationRepository.findById(1L);
 
         Assertions.assertThat(optional).isPresent();
-        Assertions.assertThat(optional.get().getName()).isEqualTo("test station");
+        Assertions.assertThat(optional.get().getName()).isEqualTo("station A1");
     }
 
     @Test
@@ -58,7 +58,7 @@ public class StationRepositoryTest {
     public void findAllStationTest() {
         List<StationEntity> all = stationRepository.findAll();
 
-        Assertions.assertThat(all.size()).isGreaterThan(0);
+        Assertions.assertThat(all).isNotEmpty().size().isEqualTo(18);
     }
 
     @Test
@@ -79,6 +79,6 @@ public class StationRepositoryTest {
         stationRepository.deleteById(1L);
         Optional<StationEntity> optionalStation = stationRepository.findById(1L);
 
-        Assertions.assertThat(optionalStation.isEmpty()).isTrue();
+        Assertions.assertThat(optionalStation).isEmpty();
     }
 }
