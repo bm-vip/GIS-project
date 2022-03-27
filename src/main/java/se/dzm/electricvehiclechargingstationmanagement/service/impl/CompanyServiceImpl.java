@@ -2,6 +2,8 @@ package se.dzm.electricvehiclechargingstationmanagement.service.impl;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import se.dzm.electricvehiclechargingstationmanagement.entity.CompanyEntity;
@@ -26,9 +28,8 @@ public class CompanyServiceImpl extends BaseServiceImpl<CompanyModel, CompanyEnt
     }
 
     @Override
-    public CompanyModel findByParentId(Long parentId) {
-        CompanyModel companyModel = mapper.toModel(repository.findByParentId(parentId).orElseThrow(ResourceNotFoundException::new));
-        return companyModel;
+    public Page<CompanyModel> findByParentId(Long parentId, Pageable pageable) {
+        return repository.findByParentId(parentId, pageable).map(mapper::toModel);
     }
 
     @Override

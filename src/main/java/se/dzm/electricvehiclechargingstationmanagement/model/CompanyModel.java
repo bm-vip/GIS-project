@@ -10,7 +10,6 @@ import java.util.List;
 @Data
 public class CompanyModel extends BaseModel<Long> {
 
-    private Long id;
     private String name;
     private CompanyModel parent;
     private List<StationModel> stationList;

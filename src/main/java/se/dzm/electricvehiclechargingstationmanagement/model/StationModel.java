@@ -8,7 +8,6 @@ import lombok.Data;
 @Data
 public class StationModel extends BaseModel<Long> {
 
-    private Long id;
     private String name;
     private Double latitude;
     private Double longitude;

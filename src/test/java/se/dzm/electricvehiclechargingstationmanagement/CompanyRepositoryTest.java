@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.annotation.Commit;
 import se.dzm.electricvehiclechargingstationmanagement.entity.CompanyEntity;
 import se.dzm.electricvehiclechargingstationmanagement.repository.CompanyRepository;
@@ -57,10 +59,10 @@ public class CompanyRepositoryTest {
     @Test
     @Order(4)
     public void findCompanyByParentIdTest() {
-        Optional<CompanyEntity> optional = companyRepository.findByParentId(1L);
+        Page<CompanyEntity> companyEntityPage = companyRepository.findByParentId(1L, Pageable.ofSize(10));
 
-        Assertions.assertThat(optional.isPresent()).isTrue();
-        Assertions.assertThat(optional.get().getName()).isEqualTo("test child company");
+        Assertions.assertThat(companyEntityPage.getTotalElements()).isGreaterThan(0);
+        Assertions.assertThat(companyEntityPage.getContent().get(1).getName()).isEqualTo("test child company");
     }
 
     @Test

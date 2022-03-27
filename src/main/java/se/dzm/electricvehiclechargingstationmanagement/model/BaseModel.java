@@ -6,11 +6,9 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public abstract class BaseModel<ID extends Serializable> implements Serializable {
+public class BaseModel<ID extends Serializable> implements Serializable {
+    private ID id;
     protected int version;
     @JsonIgnore
     private String selectTitle;
-
-    public abstract ID getId();
-    public abstract void setId(ID id);
 }

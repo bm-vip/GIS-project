@@ -11,6 +11,10 @@ import java.util.List;
 public interface StationMapper extends BaseMapper<StationModel, StationEntity> {
 
     @Override
-    @Mapping(target = "company.stationList", expression = "java(null)")
+
+    @Mappings({
+            @Mapping(target = "company.stationList", expression = "java(null)"),
+            @Mapping(target = "company.parent", expression = "java(null)")
+    })
     StationModel toModel(final StationEntity entity);
 }

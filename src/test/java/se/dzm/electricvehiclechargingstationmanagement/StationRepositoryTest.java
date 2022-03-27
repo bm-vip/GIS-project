@@ -35,8 +35,8 @@ public class StationRepositoryTest {
 
         StationEntity stationEntity = new StationEntity();
         stationEntity.setName("test station");
-        stationEntity.setLatitude(5.2);
-        stationEntity.setLatitude(4.2);
+        stationEntity.setLatitude(59.409801);
+        stationEntity.setLatitude(17.827791);
         stationEntity.setCompany(companyEntity);
         stationRepository.save(stationEntity);
 

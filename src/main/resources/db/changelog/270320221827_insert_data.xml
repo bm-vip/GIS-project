@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+
+    <changeSet id="270320221827-1" author="b.mohamadi">
+        <loadData file="db/data/tbl_company.csv" tableName = "tbl_company" >
+            <column header="id" name="id" type="${idType}"/>
+            <column header="created_by" name="created_by" type="VARCHAR(255)"/>
+            <column header="created_date" name="created_date" type="DATETIME"/>
+            <column header="modified_by" name="modified_by" type="VARCHAR(255)"/>
+            <column header="modified_date" name="modified_date" type="DATETIME"/>
+            <column header="version" name="version" type="integer"/>
+            <column header="name" name="name" type="VARCHAR(255)"/>
+            <column header="parent_company_id" name="parent_company_id" type="bigint"/>
+        </loadData>
+    </changeSet>
+
+    <changeSet id="270320221827-2" author="b.mohamadi">
+        <loadData file="db/data/tbl_station.csv" tableName = "tbl_station" >
+            <column header="id" name="id" type="${idType}"/>
+            <column header="created_by" name="created_by" type="VARCHAR(255)"/>
+            <column header="created_date" name="created_date" type="DATETIME"/>
+            <column header="modified_by" name="modified_by" type="VARCHAR(255)"/>
+            <column header="modified_date" name="modified_date" type="DATETIME"/>
+            <column header="version" name="version" type="integer"/>
+            <column header="name" name="name" type="VARCHAR(255)"/>
+            <column header="lat" name="lat" type="${doubleType}"/>
+            <column header="lng" name="lng" type="${doubleType}"/>
+            <column header="company_id" name="company_id" type="bigint"/>
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

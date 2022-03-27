@@ -38,8 +38,8 @@
             <column name="modified_date" type="DATETIME"/>
             <column defaultValueNumeric="0" name="version" type="integer"/>
             <column name="name" type="VARCHAR(255)"/>
-            <column name="latitude" type="${doubleType}"/>
-            <column name="longitude" type="${doubleType}"/>
+            <column name="lat" type="${doubleType}"/>
+            <column name="lng" type="${doubleType}"/>
             <column name="company_id" type="bigint"/>
         </createTable>
     </changeSet>
