@@ -18,6 +18,8 @@ services:
     image: postgres
     container_name: postgresql-container
     restart: unless-stopped
+    volumes:
+      - ./schema.sql:/schema.sql
     ports:
       - "5432:5432"
     environment:

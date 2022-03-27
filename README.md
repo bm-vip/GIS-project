@@ -14,7 +14,7 @@ docker-compose up
    3. Maven 3
 ```
 mvn clean install
-java -jar electric-vehicle-charging-station-management-1.0.0-SNAPSHOT.jar
+java -jar target/electric-vehicle-charging-station-management-1.0.0-SNAPSHOT.jar
 ```
 After finishing installation click on the [Link](http://localhost:2022/swagger-ui.html).
 
