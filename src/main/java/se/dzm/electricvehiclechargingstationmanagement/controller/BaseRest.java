@@ -6,6 +6,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.Optional;
 
@@ -21,7 +22,7 @@ public interface BaseRest<M, ID extends Serializable> {
 
     @GetMapping(value = {"/findAll"})
     ResponseEntity<Page<M>> findAll(@RequestParam(value = "model", required = false) Optional<String> json
-            , @PageableDefault(size = 10, page = 0) Pageable pageable);
+            , @PageableDefault Pageable pageable);
 
 
     @GetMapping(value = {"/countAll"})
@@ -32,5 +33,5 @@ public interface BaseRest<M, ID extends Serializable> {
 
     @PostMapping(value = {"/save"})
     @ResponseBody
-    ResponseEntity<M> save(@RequestBody M model);
+    ResponseEntity<M> save(@RequestBody @Valid M model);
 }

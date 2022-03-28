@@ -6,5 +6,5 @@ import se.dzm.electricvehiclechargingstationmanagement.model.CompanyModel;
 
 public interface CompanyService extends BaseService<CompanyModel, Long> {
 
-    Page<CompanyModel> findByParentId(Long parentId, Pageable pageable);
+    Page<CompanyModel> findAllByParentId(Long parentId, Pageable pageable);
 }

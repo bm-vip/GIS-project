@@ -2,6 +2,9 @@ package se.dzm.electricvehiclechargingstationmanagement.util;
 
 import se.dzm.electricvehiclechargingstationmanagement.enums.DistanceType;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class DistanceUtil {
 
     public static double distance(double lat1, double lon1, double lat2, double lon2, DistanceType unit) {
@@ -15,7 +18,7 @@ public class DistanceUtil {
             case Kilometers -> dist * 1.609344;
             case Nautical_Miles -> dist * 0.8684;
         };
-        return (dist);
+        return BigDecimal.valueOf(dist).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
     /*

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import se.dzm.electricvehiclechargingstationmanagement.entity.CompanyEntity;
 import se.dzm.electricvehiclechargingstationmanagement.entity.QCompanyEntity;
-import se.dzm.electricvehiclechargingstationmanagement.exception.ResourceNotFoundException;
 import se.dzm.electricvehiclechargingstationmanagement.mapping.CompanyMapper;
 import se.dzm.electricvehiclechargingstationmanagement.model.CompanyModel;
 import se.dzm.electricvehiclechargingstationmanagement.repository.CompanyRepository;
@@ -28,7 +27,7 @@ public class CompanyServiceImpl extends BaseServiceImpl<CompanyModel, CompanyEnt
     }
 
     @Override
-    public Page<CompanyModel> findByParentId(Long parentId, Pageable pageable) {
+    public Page<CompanyModel> findAllByParentId(Long parentId, Pageable pageable) {
         return repository.findByParentId(parentId, pageable).map(mapper::toModel);
     }
 
