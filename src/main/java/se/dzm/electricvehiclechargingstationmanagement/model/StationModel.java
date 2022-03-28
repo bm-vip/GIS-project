@@ -2,7 +2,8 @@ package se.dzm.electricvehiclechargingstationmanagement.model;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -11,13 +12,14 @@ import javax.validation.constraints.NotNull;
 @Data
 public class StationModel extends BaseModel<Long> {
 
-    @NotEmpty
+    @NotNull(message = "Name is mandatory")
+    @NotBlank(message = "Name is mandatory")
     private String name;
-    @NotNull
+    @NotNull(message = "latitude is mandatory")
     private Double latitude;
-    @NotNull
+    @NotNull(message = "longitude is mandatory")
     private Double longitude;
-    @NotNull
+    @NotNull(message = "company is mandatory")
     private CompanyModel company;
     private Double distance;
 }

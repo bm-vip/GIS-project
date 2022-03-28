@@ -30,7 +30,7 @@ public class StationRepositoryTest {
         StationEntity stationEntity = new StationEntity();
         stationEntity.setName("test station");
         stationEntity.setLatitude(59.409801);
-        stationEntity.setLatitude(17.827791);
+        stationEntity.setLongitude(17.827791);
         stationEntity.setCompany(new CompanyEntity(){{setId(3L);}});
         stationRepository.save(stationEntity);
 
@@ -49,7 +49,15 @@ public class StationRepositoryTest {
     }
 
     @Test
-    @Order(3)
+    public void update_shouldUpdateStationEntityToDatabase(){
+        StationEntity stationEntity = stationRepository.findById(1L).get();
+        stationEntity.setName("new Station test");
+        StationEntity stationUpdated = stationRepository.save(stationEntity);
+
+        Assertions.assertThat(stationUpdated.getName()).isEqualTo("new Station test");
+    }
+
+    @Test
     public void findById_shouldReturnStationEntity() {
         Optional<StationEntity> optional = stationRepository.findById(1L);
 
@@ -58,22 +66,10 @@ public class StationRepositoryTest {
     }
 
     @Test
-    @Order(4)
     public void findAll_shouldReturnPageableStationEntities() {
         Page<StationEntity> page = stationRepository.findAll(Pageable.ofSize(10));
 
         Assertions.assertThat(page).isNotEmpty().size().isEqualTo(10);
         Assertions.assertThat(page.getTotalElements()).isEqualTo(17);
-    }
-
-    @Test
-    @Order(5)
-    @Commit
-    public void update_shouldUpdateStationEntityToDatabase(){
-        StationEntity stationEntity = stationRepository.findById(1L).get();
-        stationEntity.setName("new Station test");
-        StationEntity stationUpdated = stationRepository.save(stationEntity);
-
-        Assertions.assertThat(stationUpdated.getName()).isEqualTo("new Station test");
     }
 }

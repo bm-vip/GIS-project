@@ -58,7 +58,15 @@ class CompanyControllerTest {
     }
 
     @Test
-    @Order(3)
+    void save_shouldThrowBadRequestError() throws Exception {
+        mockMvc.perform(post("/api/v1/company/save").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+        ;
+    }
+
+
+
+    @Test
     void findById_shouldReturnCompanyModel() throws Exception {
         mockMvc.perform(get("/api/v1/company/findById/{id}", 1L))
                 .andExpect(status().isOk())
@@ -66,7 +74,6 @@ class CompanyControllerTest {
     }
 
     @Test
-    @Order(4)
     void findAll_shouldReturnPageableCompanyModels() throws Exception {
         String filter = objectMapper.writeValueAsString(new CompanyModel(){{setName("company");}});
 
@@ -77,7 +84,6 @@ class CompanyControllerTest {
     }
 
     @Test
-    @Order(5)
     void countAll_shouldReturnTotalNumberOfCompanies() throws Exception {
         String filter = objectMapper.writeValueAsString(new CompanyModel(){{setName("company");}});
 
@@ -88,7 +94,6 @@ class CompanyControllerTest {
 
     @Test
     @Transactional
-    @Order(6)
     void findAllByParentId_shouldReturnPageableCompanyModels() throws Exception {
         mockMvc.perform(get("/api/v1/company/findAllByParentId/{parentId}",1L))
                 .andExpect(status().isOk())

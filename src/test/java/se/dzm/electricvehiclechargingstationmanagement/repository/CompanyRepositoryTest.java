@@ -57,7 +57,15 @@ public class CompanyRepositoryTest {
     }
 
     @Test
-    @Order(3)
+    public void update_shouldUpdateCompanyEntityToDatabase() {
+        CompanyEntity companyEntity = companyRepository.findById(3L).get();
+        companyEntity.setName("new company test");
+        CompanyEntity companyUpdated = companyRepository.save(companyEntity);
+
+        Assertions.assertThat(companyUpdated.getName()).isEqualTo("new company test");
+    }
+
+    @Test
     public void findById_shouldReturnCompanyEntity() {
         Optional<CompanyEntity> optional = companyRepository.findById(1L);
 
@@ -66,7 +74,6 @@ public class CompanyRepositoryTest {
     }
 
     @Test
-    @Order(4)
     public void findAll_shouldReturnPageableCompanyEntities() {
         Page<CompanyEntity> page = companyRepository.findAll(PageRequest.ofSize(10));
 
@@ -75,7 +82,6 @@ public class CompanyRepositoryTest {
     }
 
     @Test
-    @Order(5)
     public void countAll_shouldReturnTotalNumberOfCompanies() {
         long count = companyRepository.count();
 
@@ -83,22 +89,11 @@ public class CompanyRepositoryTest {
     }
 
     @Test
-    @Order(6)
     public void findAllByParentId_shouldReturnPageableCompanyEntities() {
         Page<CompanyEntity> page = companyRepository.findByParentId(1L, Pageable.ofSize(10));
 
         Assertions.assertThat(page).isNotEmpty().size().isEqualTo(1);
         Assertions.assertThat(page.getTotalElements()).isEqualTo(1);
         Assertions.assertThat(page.getContent().get(0).getName()).isEqualTo("company B");
-    }
-
-    @Test
-    @Order(7)
-    public void update_shouldUpdateCompanyEntityToDatabase() {
-        CompanyEntity companyEntity = companyRepository.findById(3L).get();
-        companyEntity.setName("new company test");
-        CompanyEntity companyUpdated = companyRepository.save(companyEntity);
-
-        Assertions.assertThat(companyUpdated.getName()).isEqualTo("new company test");
     }
 }

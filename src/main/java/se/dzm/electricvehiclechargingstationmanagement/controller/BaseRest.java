@@ -33,5 +33,5 @@ public interface BaseRest<M, ID extends Serializable> {
 
     @PostMapping(value = {"/save"})
     @ResponseBody
-    ResponseEntity<M> save(@RequestBody @Valid M model);
+    ResponseEntity<M> save(@Valid @RequestBody M model);
 }

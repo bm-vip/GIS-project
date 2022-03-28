@@ -3,6 +3,7 @@ package se.dzm.electricvehiclechargingstationmanagement.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
 * Created by Behrooz.Mohamadi on 24/03/2022.
@@ -19,16 +20,17 @@ public class StationEntity extends BaseEntity<Long> {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_STATION")
     private Long id;
 
+    @NotNull
     private String name;
 
-    @Column(name = "lat")
+    @Column(name = "lat", nullable = false)
     private Double latitude;
 
-    @Column(name = "lng")
+    @Column(name = "lng", nullable = false)
     private Double longitude;
 
     @ManyToOne
-    @JoinColumn(name = "company_id")
+    @JoinColumn(name = "company_id", nullable = false)
     private CompanyEntity company;
 
 

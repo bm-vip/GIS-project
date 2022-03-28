@@ -21,7 +21,9 @@
             <column name="modified_by" type="VARCHAR(255)"/>
             <column name="modified_date" type="DATETIME"/>
             <column defaultValueNumeric="0" name="version" type="integer"/>
-            <column name="name" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
             <column name="parent_company_id" type="bigint">
                 <constraints nullable="true"/>
             </column>
@@ -37,10 +39,18 @@
             <column name="modified_by" type="VARCHAR(255)"/>
             <column name="modified_date" type="DATETIME"/>
             <column defaultValueNumeric="0" name="version" type="integer"/>
-            <column name="name" type="VARCHAR(255)"/>
-            <column name="lat" type="${doubleType}"/>
-            <column name="lng" type="${doubleType}"/>
-            <column name="company_id" type="bigint"/>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lat" type="${doubleType}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lng" type="${doubleType}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="company_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
     <changeSet id="250320222030-5" author="b.mohamadi">

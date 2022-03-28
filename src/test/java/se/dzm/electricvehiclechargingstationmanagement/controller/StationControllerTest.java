@@ -35,6 +35,8 @@ class StationControllerTest {
     void save_shouldSaveStationModelToDatabase() throws Exception {
         StationModel model = new StationModel() {{
             setName("test station");
+            setLatitude(59.409801);
+            setLongitude(17.827791);
             setCompany(new CompanyModel(){{setId(3L);}});
         }};
         String json = objectMapper.writeValueAsString(model);
@@ -57,7 +59,13 @@ class StationControllerTest {
     }
 
     @Test
-    @Order(3)
+    void save_shouldThrowBadRequestError() throws Exception {
+        mockMvc.perform(post("/api/v1/station/save").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+        ;
+    }
+
+    @Test
     void findById_shouldReturnStationModel() throws Exception {
         mockMvc.perform(get("/api/v1/station/findById/{id}", 1L))
                 .andExpect(status().isOk())
@@ -65,7 +73,6 @@ class StationControllerTest {
     }
 
     @Test
-    @Order(4)
     void findAll_shouldReturnPageableStationModels() throws Exception {
         String filter = objectMapper.writeValueAsString(new StationModel(){{setName("station");}});
 
@@ -77,7 +84,6 @@ class StationControllerTest {
     }
 
     @Test
-    @Order(5)
     void countAll_shouldReturnTotalNumberOfCompanies() throws Exception {
         String filter = objectMapper.writeValueAsString(new StationModel(){{setName("station");}});
 
@@ -87,7 +93,6 @@ class StationControllerTest {
     }
 
     @Test
-    @Order(6)
     void findAllByLocation_shouldReturnPageableStationModelsOrderByDistance() throws Exception {
         mockMvc.perform(get("/api/v1/station/findAllByLocation/{latitude}/{longitude}",35.294952,53.715041).param("companyId","1"))
                 .andExpect(status().isOk())

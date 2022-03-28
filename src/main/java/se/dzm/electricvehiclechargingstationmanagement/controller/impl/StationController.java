@@ -2,7 +2,6 @@ package se.dzm.electricvehiclechargingstationmanagement.controller.impl;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import se.dzm.electricvehiclechargingstationmanagement.model.StationModel;
 import se.dzm.electricvehiclechargingstationmanagement.service.StationService;
@@ -14,7 +13,6 @@ import java.util.List;
  */
 @RestController
 @Tag(name = "Station Rest Service v1")
-@Validated
 @RequestMapping(value = "/api/v1/station")
 public class StationController extends BaseRestImpl<StationModel, Long> {
 
