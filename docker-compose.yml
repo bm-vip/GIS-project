@@ -10,10 +10,11 @@ services:
     environment:
       - DB_URL=jdbc:postgresql://dbpostgresql:5432/evcsm_db
       - B_USER=postgres
-      - DB_PASS=root
+      - DB_PASS=postgres
     depends_on:
-      dbpostgresql:
-        condition: service_healthy
+      - dbpostgresql
+#      dbpostgresql:
+#        condition: service_healthy
   dbpostgresql:
     image: postgres
     container_name: postgresql-container
@@ -23,7 +24,7 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_PASSWORD=root
+      - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_DB=evcsm_db
     healthcheck:
