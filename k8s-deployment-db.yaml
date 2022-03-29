@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: postgres-db
+  name: postgres-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-db
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: postgres-db
+    spec:
+      containers:
+        - image: postgres
+          name: postgres
+          resources: {}
+status: {}
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: postgres-db
+  name: postgres-db
+spec:
+  ports:
+    - name: 5432-5432
+      port: 5432
+      protocol: TCP
+      targetPort: 5431
+  selector:
+    app: postgres-db
+  type: ClusterIP
+status:
+  loadBalancer: {}

@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: electric-vehicle-charging-station-management
+  name: electric-vehicle-charging-station-management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: electric-vehicle-charging-station-management
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: electric-vehicle-charging-station-management
+    spec:
+      containers:
+        - image: electric-vehicle-charging-station-management-image
+          name: electric-vehicle-charging-station-management-image
+          resources: {}
+status: {}
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: electric-vehicle-charging-station-management
+  name: electric-vehicle-charging-station-management
+spec:
+  ports:
+    - name: 2022-2022
+      port: 2022
+      protocol: TCP
+      targetPort: 2021
+  selector:
+    app: electric-vehicle-charging-station-management
+  type: ClusterIP
+status:
+  loadBalancer: {}

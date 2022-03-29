@@ -1,6 +1,6 @@
 # Electric vehicle charging station management system
 ## Installation
-####You have 2 ways for installation:
+You have 2 ways for installation:\
 Before running the application, the following commands must be executed in the terminal from the project root directory:
 1. prerequisites for using Docker (recommended) 
    1. Install Docker
@@ -18,7 +18,13 @@ mvn clean install
 java -jar target/electric-vehicle-charging-station-management-1.0.0-SNAPSHOT.jar
 ```
 After finishing installation click on the [Link](http://localhost:2022/swagger-ui.html).
-
+## Kubernetes configuration
+```
+kubectl apply -f k8s-deployment-app.yaml
+kubectl apply -f k8s-deployment-db.yaml
+kubectl get pods | grep electric
+kubectl get pods | grep postgres
+```
 ## Introduction
 The task is to implement Rest-API for the electric vehicle charging station management
 system.
