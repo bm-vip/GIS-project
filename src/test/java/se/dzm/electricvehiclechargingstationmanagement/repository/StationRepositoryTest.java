@@ -13,8 +13,10 @@ import org.springframework.test.annotation.Commit;
 import se.dzm.electricvehiclechargingstationmanagement.entity.CompanyEntity;
 import se.dzm.electricvehiclechargingstationmanagement.entity.StationEntity;
 
-import java.util.List;
+import javax.validation.ConstraintViolationException;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DataJpaTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -48,6 +50,12 @@ public class StationRepositoryTest {
         Assertions.assertThat(optionalStation).isEmpty();
     }
 
+    @Test
+    void save_shouldExceptionThrown_thenAssertionSucceeds() {
+        ConstraintViolationException exception = assertThrows(ConstraintViolationException.class, () -> stationRepository.saveAndFlush(new StationEntity()));
+
+        Assertions.assertThat(exception.getMessage()).contains("must not be null");
+    }
     @Test
     public void update_shouldUpdateStationEntityToDatabase(){
         StationEntity stationEntity = stationRepository.findById(1L).get();

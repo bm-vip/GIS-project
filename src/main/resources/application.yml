@@ -1,5 +1,7 @@
-server.port: 2022
-
+server:
+  port: 2022
+  error:
+    include-message: always
 # Spring Boot configuration
 spring:
   application.name: electric-vehicle-charging-station-management

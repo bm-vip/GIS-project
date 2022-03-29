@@ -7,6 +7,16 @@ import java.math.RoundingMode;
 
 public class DistanceUtil {
 
+    /**
+     * Calculate the length of the distance between two points by selecting a unit of measurement
+     *
+     * @param lat1 source latitude
+     * @param lon1 source longitude
+     * @param lat2 destination latitude
+     * @param lon2 destination longitude
+     * @param unit unit of measurement
+     * @return distance with two decimal digit
+     */
     public static double distance(double lat1, double lon1, double lat2, double lon2, DistanceType unit) {
         double theta = lon1 - lon2;
         double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));

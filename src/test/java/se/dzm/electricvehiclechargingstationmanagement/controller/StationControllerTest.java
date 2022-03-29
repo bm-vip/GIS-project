@@ -73,6 +73,12 @@ class StationControllerTest {
     }
 
     @Test
+    void findById_shouldThrowNotFoundError() throws Exception {
+        mockMvc.perform(get("/api/v1/station/findById/{id}", 44L))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
     void findAll_shouldReturnPageableStationModels() throws Exception {
         String filter = objectMapper.writeValueAsString(new StationModel(){{setName("station");}});
 
@@ -93,7 +99,7 @@ class StationControllerTest {
     }
 
     @Test
-    void findAllByLocation_shouldReturnPageableStationModelsOrderByDistance() throws Exception {
+    void findAllByLocation_shouldReturnStationModelsOrderByDistance() throws Exception {
         mockMvc.perform(get("/api/v1/station/findAllByLocation/{latitude}/{longitude}",35.294952,53.715041).param("companyId","1"))
                 .andExpect(status().isOk())
                 .andExpect((jsonPath("$.*", Matchers.hasSize(10))))

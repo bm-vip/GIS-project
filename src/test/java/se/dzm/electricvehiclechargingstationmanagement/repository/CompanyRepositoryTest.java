@@ -16,8 +16,12 @@ import org.springframework.test.context.ActiveProfiles;
 import se.dzm.electricvehiclechargingstationmanagement.entity.CompanyEntity;
 import se.dzm.electricvehiclechargingstationmanagement.repository.CompanyRepository;
 
+import javax.validation.ConstraintViolationException;
+import javax.validation.ValidationException;
 import java.util.List;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DataJpaTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -46,7 +50,7 @@ public class CompanyRepositoryTest {
     @Test
     @Order(2)
     @Commit
-    public void deleteById_shouldDeleteByIdFromDatabase(){
+    public void deleteById_shouldDeleteByIdFromDatabase() {
         companyRepository.deleteById(5L);
         companyRepository.deleteById(4L);
         Optional<CompanyEntity> childOptional = companyRepository.findById(5L);
@@ -54,6 +58,13 @@ public class CompanyRepositoryTest {
 
         Assertions.assertThat(childOptional).isEmpty();
         Assertions.assertThat(parentOptional).isEmpty();
+    }
+
+    @Test
+    void save_shouldExceptionThrown_thenAssertionSucceeds() {
+        ConstraintViolationException exception = assertThrows(ConstraintViolationException.class, () -> companyRepository.saveAndFlush(new CompanyEntity()));
+
+        Assertions.assertThat(exception.getMessage()).contains("must not be null");
     }
 
     @Test

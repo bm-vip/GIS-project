@@ -1,15 +1,15 @@
 package se.dzm.electricvehiclechargingstationmanagement.exception;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.server.ResponseStatusException;
 
-@ResponseStatus(HttpStatus.NOT_FOUND)
-public class ResourceNotFoundException extends RuntimeException{
-    public ResourceNotFoundException(String message)
-    {
-        super(message);
+public class ResourceNotFoundException extends ResponseStatusException {
+    public ResourceNotFoundException(String reason) {
+        super(HttpStatus.NOT_FOUND, reason);
     }
-    public ResourceNotFoundException() {
+
+    public ResourceNotFoundException(String reason, Throwable cause) {
+        super(HttpStatus.NOT_FOUND, reason, cause);
     }
 }
 

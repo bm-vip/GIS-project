@@ -48,7 +48,7 @@ public final class MapperHelper {
      *
      * @param supplier
      * @param defaultValue
-     * @param <O>          Class of output
+     * @param <O> Class of output
      * @return
      */
     @SafeVarargs

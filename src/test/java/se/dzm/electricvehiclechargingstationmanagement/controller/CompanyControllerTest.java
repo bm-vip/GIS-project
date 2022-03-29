@@ -64,13 +64,17 @@ class CompanyControllerTest {
         ;
     }
 
-
-
     @Test
     void findById_shouldReturnCompanyModel() throws Exception {
         mockMvc.perform(get("/api/v1/company/findById/{id}", 1L))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("company A"));
+    }
+
+    @Test
+    void findById_shouldThrowNotFoundError() throws Exception {
+        mockMvc.perform(get("/api/v1/company/findById/{id}", 44L))
+                .andExpect(status().isNotFound());
     }
 
     @Test
