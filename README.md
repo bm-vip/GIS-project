@@ -1,6 +1,6 @@
 # Electric vehicle charging station management system
 ## Installation
-####You have 2 ways for installation:
+####You have 2 ways for installation (Docker, OS):
 Before running the application, the following commands must be executed in the terminal from the project root directory:
 1. prerequisites for using Docker (recommended) 
    1. Install Docker
