@@ -1,9 +1,10 @@
 # Electric vehicle charging station management system
 ## Installation
-####You have 2 ways for installation (Docker, OS):
+####You have 2 ways for installation:
 Before running the application, the following commands must be executed in the terminal from the project root directory:
 1. prerequisites for using Docker (recommended) 
    1. Install Docker
+   2. run the following command:
 ```
 docker-compose up
 ```
@@ -11,6 +12,7 @@ docker-compose up
    1. Install Java 17
    2. Install Postgres sql database
    3. Maven 3
+   4. run the following command:
 ```
 mvn clean install
 java -jar target/electric-vehicle-charging-station-management-1.0.0-SNAPSHOT.jar
