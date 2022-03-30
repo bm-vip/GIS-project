@@ -34,7 +34,7 @@ spec:
     - name: 2022-2022
       port: 2022
       protocol: TCP
-      targetPort: 2021
+      targetPort: 2022
   selector:
     app: electric-vehicle-charging-station-management
   type: ClusterIP
