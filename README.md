@@ -19,11 +19,22 @@ java -jar target/electric-vehicle-charging-station-management-1.0.0-SNAPSHOT.jar
 ```
 After finishing installation click on the [Link](http://localhost:2022/swagger-ui.html).
 ## Kubernetes configuration
+For API scalability, kubernetes should be installed and the following commands must be executed for deploying the images:
 ```
 kubectl apply -f k8s-deployment-app.yaml
 kubectl apply -f k8s-deployment-db.yaml
 kubectl get pods | grep electric
 kubectl get pods | grep postgres
+```
+Note: If any container of related images has already been started by Docker Compos, must be stopped that containers to prevent the port from being occupied with the following commands:
+```
+docker stop electric-vehicle-charging-station-management_app_1
+docker stop postgresql-container
+```
+Finally, for checking application interface, should port forward pods on current OS with the following commands:
+```
+kubectl port-forward electric-vehicle-charging-station-management 2022:2022&
+kubectl port-forward postgres-db 5432:5432&
 ```
 ## Introduction
 The task is to implement Rest-API for the electric vehicle charging station management
