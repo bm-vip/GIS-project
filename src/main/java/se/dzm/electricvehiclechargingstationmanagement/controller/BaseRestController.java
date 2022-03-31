@@ -29,7 +29,7 @@ public interface BaseRestController<M, ID extends Serializable> {
 
     @GetMapping(value = {"/findAllTable"})
     @ResponseBody
-    PageModel findAllTable(@RequestParam("model") String json
+    PageModel findAllTable(@RequestParam(value = "model",required = false) Optional<String> json
                          , @RequestParam int start
                          , @RequestParam int length
                          , @RequestParam("order[0][dir]") String dir
@@ -38,7 +38,7 @@ public interface BaseRestController<M, ID extends Serializable> {
 
     @GetMapping(value = {"/findAllSelect"})
     @ResponseBody
-    Page<Select2Model> findAllSelect(@RequestParam("model") String json,
+    Page<Select2Model> findAllSelect(@RequestParam(value = "model",required = false) Optional<String> json,
                           @RequestParam int page);
 
     @GetMapping(value = {"/countAll"})

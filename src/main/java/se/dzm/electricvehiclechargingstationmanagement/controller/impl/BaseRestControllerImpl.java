@@ -48,8 +48,8 @@ public abstract class BaseRestControllerImpl<M extends BaseModel<ID>, ID extends
 
     @SneakyThrows
     @Override
-    public PageModel findAllTable(String json, int start, int length, String dir, int columnIndex, HttpServletRequest request) {
-        M model = objectMapper.readValue(json, clazz);
+    public PageModel findAllTable(Optional<String> json, int start, int length, String dir, int columnIndex, HttpServletRequest request) {
+        M model = objectMapper.readValue(json.orElse("{}"), clazz);
         String propertyName = request.getParameter("columns[" + columnIndex + "][data]");
         Sort.Direction direction = dir.equals("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
         Pageable pageable = PageRequest.of(start / length, length, direction, propertyName);
@@ -58,8 +58,8 @@ public abstract class BaseRestControllerImpl<M extends BaseModel<ID>, ID extends
 
     @SneakyThrows
     @Override
-    public Page<Select2Model> findAllSelect(String json, int page) {
-        M model = objectMapper.readValue(json, clazz);
+    public Page<Select2Model> findAllSelect(Optional<String> json, int page) {
+        M model = objectMapper.readValue(json.orElse("{}"), clazz);
 
         Pageable pageable = PageRequest.of(page, 10);
         return service.findAllSelect(model, pageable);
