@@ -8,6 +8,8 @@ import se.dzm.electricvehiclechargingstationmanagement.entity.BaseEntity;
 import se.dzm.electricvehiclechargingstationmanagement.exception.ResourceNotFoundException;
 import se.dzm.electricvehiclechargingstationmanagement.mapping.BaseMapper;
 import se.dzm.electricvehiclechargingstationmanagement.model.BaseModel;
+import se.dzm.electricvehiclechargingstationmanagement.model.PageModel;
+import se.dzm.electricvehiclechargingstationmanagement.model.Select2Model;
 import se.dzm.electricvehiclechargingstationmanagement.repository.BaseRepository;
 import se.dzm.electricvehiclechargingstationmanagement.service.BaseService;
 
@@ -30,6 +32,22 @@ public abstract class BaseServiceImpl<M extends BaseModel<ID>, E extends BaseEnt
     @Transactional(readOnly = true)
     public Page<M> findAll(M filter, Pageable pageable) {
         return repository.findAll(queryBuilder(filter), pageable).map(mapper::toModel);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public PageModel findAllTable(M filter, Pageable pageable) {
+        Predicate predicate = queryBuilder(filter);
+        Page<E> page = repository.findAll(predicate, pageable);
+
+        return new PageModel(repository.count(), page.getTotalElements(), mapper.toModel(page.getContent()));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Select2Model> findAllSelect(M filter, Pageable pageable) {
+        Predicate predicate = queryBuilder(filter);
+        return repository.findAll(predicate, pageable).map(m -> new Select2Model(m.getId().toString(), m.getSelectTitle()));
     }
 
     @Override

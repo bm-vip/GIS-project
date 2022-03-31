@@ -1,0 +1,2 @@
+id,created_by,created_date,modified_by,modified_date,version,user_name,email,password,first_name,last_name,active_flag
+1,b.mohamadi,2022-03-29 22:07:51.381060,b.mohamadi,2022-03-29 22:07:51.381060,0,admin,info@dzm.se,$2a$10$GtT8ZM5tKv0sp92RPqhzEOxws6Zk06I2Lee59OWOMrdWsg6uoqp36,behrooz,mohamadi,true

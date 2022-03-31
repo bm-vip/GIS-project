@@ -16,8 +16,8 @@ public class StationEntity extends BaseEntity<Long> {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @SequenceGenerator(name = "SEQ_STATION", sequenceName = "SEQ_STATION", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_STATION")
+    @SequenceGenerator(name = "seq_station", sequenceName = "seq_station", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_station")
     private Long id;
 
     @NotNull

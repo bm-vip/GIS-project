@@ -2,6 +2,7 @@ package se.dzm.electricvehiclechargingstationmanagement.service.impl;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import se.dzm.electricvehiclechargingstationmanagement.entity.QStationEntity;
@@ -26,6 +27,7 @@ public class StationServiceImpl extends BaseServiceImpl<StationModel, StationEnt
     private StationRepository stationRepository;
     private StationMapper stationMapper;
 
+    @Autowired
     public StationServiceImpl(StationRepository repository, StationMapper mapper) {
         super(repository, mapper);
         this.stationRepository = repository;

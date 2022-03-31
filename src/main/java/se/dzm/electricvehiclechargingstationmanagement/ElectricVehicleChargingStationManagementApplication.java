@@ -5,18 +5,15 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 
 import javax.annotation.PostConstruct;
-import java.awt.*;
-import java.io.IOException;
 import java.net.InetAddress;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Objects;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 @Slf4j
 @AllArgsConstructor
 public class ElectricVehicleChargingStationManagementApplication {
@@ -47,7 +44,7 @@ public class ElectricVehicleChargingStationManagementApplication {
                 InetAddress.getLocalHost().getHostAddress(), port, environment.getActiveProfiles());
 
 
-        if (Desktop.isDesktopSupported()) {
+        /*if (Desktop.isDesktopSupported()) {
             Desktop desktop = Desktop.getDesktop();
             try {
                 desktop.browse(new URI(url));
@@ -61,6 +58,6 @@ public class ElectricVehicleChargingStationManagementApplication {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
     }
 }

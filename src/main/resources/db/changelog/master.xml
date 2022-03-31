@@ -18,5 +18,7 @@
 
     <include file="db/changelog/250320222030_create_table.xml" relativeToChangelogFile="false"/>
     <include file="db/changelog/270320221827_insert_data.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/290320222330_create_table.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/300320220244_insert_data.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
