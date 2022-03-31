@@ -17,7 +17,6 @@ docker-compose up
 mvn clean install
 java -jar target/electric-vehicle-charging-station-management-1.0.0-SNAPSHOT.jar
 ```
-After finishing installation click on the [Link](http://localhost:2022/swagger-ui.html).
 ## Kubernetes configuration
 For API scalability, kubernetes should be installed and the following commands must be executed for deploying the images:
 ```
@@ -36,6 +35,7 @@ Finally, for checking application interface, should port forward pods on current
 kubectl port-forward electric-vehicle-charging-station-management 2022:2022&
 kubectl port-forward postgres-db 5432:5432&
 ```
+After finishing installation click on the [Link](http://localhost:2022) to display login form with `admin` userName and `12345` password by `ADMIN_ROLE`.<br/> Also, you can register a new user on login form by `USER_ROLE`.<br/> After login there are 4 web forms to consuming APIs.<br/>In addition, the swagger-UI [Link](http://localhost:2022/swagger-ui.html) exists to check all APIs.
 ## Introduction
 The task is to implement Rest-API for the electric vehicle charging station management
 system.
