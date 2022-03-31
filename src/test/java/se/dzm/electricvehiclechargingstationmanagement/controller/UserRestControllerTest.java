@@ -98,6 +98,22 @@ class UserRestControllerTest {
 
     @WithMockUser(roles="ADMIN")
     @Test
+    void findAllSelect_shouldReturnPageableSelect2Models() throws Exception {
+        String filter = objectMapper.writeValueAsString(new UserModel(){{setUserName("bm_vip");}});
+
+        mockMvc.perform(get("/api/v1/user/findAllSelect")
+                        .param("model",filter)
+                        .param("page","0")
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.totalElements").value(1))
+                .andExpect((jsonPath("$.content", Matchers.hasSize(1))))
+                .andExpect(jsonPath("$.content.[0].text").value("Behrooz Mohamadi"))
+        ;
+    }
+
+    @WithMockUser(roles="ADMIN")
+    @Test
     void countAll_shouldReturnTotalNumberOfUsers() throws Exception {
         String filter = objectMapper.writeValueAsString(new UserModel(){{setFirstName("B");}});
 

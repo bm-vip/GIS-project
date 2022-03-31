@@ -91,7 +91,7 @@ class CompanyRestControllerTest {
         mockMvc.perform(get("/api/v1/company/findAll").param("model",filter))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.totalElements").value(3))
-                .andExpect((jsonPath("$.content", Matchers.hasSize(3))));
+                .andExpect(jsonPath("$.content", Matchers.hasSize(3)));
     }
 
     @WithMockUser(roles="ADMIN")
@@ -102,6 +102,22 @@ class CompanyRestControllerTest {
         mockMvc.perform(get("/api/v1/company/countAll").param("model",filter))
                 .andExpect(status().isOk())
                 .andExpect(content().string("3"));
+    }
+
+    @WithMockUser(roles="ADMIN")
+    @Test
+    void findAllSelect_shouldReturnPageableSelect2Models() throws Exception {
+        String filter = objectMapper.writeValueAsString(new CompanyModel(){{setName("company A");}});
+
+        mockMvc.perform(get("/api/v1/company/findAllSelect")
+                        .param("model",filter)
+                        .param("page","0")
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.totalElements").value(1))
+                .andExpect((jsonPath("$.content", Matchers.hasSize(1))))
+                .andExpect(jsonPath("$.content.[0].text").value("company A"))
+        ;
     }
 
     @WithMockUser(roles="ADMIN")

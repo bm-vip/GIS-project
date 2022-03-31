@@ -107,6 +107,22 @@ class StationRestControllerTest {
 
     @WithMockUser(roles="ADMIN")
     @Test
+    void findAllSelect_shouldReturnPageableSelect2Models() throws Exception {
+        String filter = objectMapper.writeValueAsString(new StationModel(){{setName("station A1");}});
+
+        mockMvc.perform(get("/api/v1/station/findAllSelect")
+                .param("model",filter)
+                .param("page","0")
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.totalElements").value(2))
+                .andExpect((jsonPath("$.content", Matchers.hasSize(2))))
+                .andExpect(jsonPath("$.content.[0].text").value("station A1"))
+        ;
+    }
+
+    @WithMockUser(roles="ADMIN")
+    @Test
     void findAllByLocation_shouldReturnStationModelsOrderByDistance() throws Exception {
         mockMvc.perform(get("/api/v1/station/findAllByLocation/{latitude}/{longitude}",35.294952,53.715041).param("companyId","1"))
                 .andExpect(status().isOk())
