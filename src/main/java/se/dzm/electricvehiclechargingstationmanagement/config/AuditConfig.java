@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Configuration
@@ -21,6 +22,8 @@ public class AuditConfig {
         @Override
         public Optional<String> getCurrentAuditor() {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            if (Objects.isNull(auth))
+                return Optional.ofNullable("b.mohamadi");
             if (auth.getName().equals("anonymousUser"))
                 return Optional.ofNullable("b.mohamadi");
             return Optional.ofNullable(auth.getName());
