@@ -50,7 +50,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserModel, UserEntity, Long
     public UserModel register(UserModel model) {
         Optional<UserEntity> optionalUserEntity = userRepository.findByUserName(model.getUserName());
         if (optionalUserEntity.isPresent())
-            throw new BadRequestException("userName was already taken!");
+            throw new BadRequestException("userName is already taken!");
 
         if (StringUtils.hasLength(model.getPassword()))
             model.setPassword(bCryptPasswordEncoder.encode(model.getPassword()));
