@@ -1,8 +1,8 @@
 package se.dzm.electricvehiclechargingstationmanagement.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -21,5 +21,6 @@ public class StationModel extends BaseModel<Long> {
     private Double longitude;
     @NotNull(message = "company is mandatory")
     private CompanyModel company;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Double distance;
 }

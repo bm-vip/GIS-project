@@ -1,8 +1,8 @@
 package se.dzm.electricvehiclechargingstationmanagement.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -17,6 +17,6 @@ public class CompanyModel extends BaseModel<Long> {
     @NotBlank(message = "Name is mandatory")
     private String name;
     private CompanyModel parent;
-    @Valid
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<StationModel> stationList;
 }
