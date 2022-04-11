@@ -9,7 +9,7 @@ services:
       - "2022:2022"
     environment:
       - DB_URL=jdbc:postgresql://dbpostgresql:5432/evcsm_db
-      - B_USER=postgres
+      - DB_USER=postgres
       - DB_PASS=postgres
     depends_on:
       - dbpostgresql
