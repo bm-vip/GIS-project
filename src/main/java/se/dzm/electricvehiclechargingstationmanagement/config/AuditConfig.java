@@ -6,8 +6,11 @@ import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.StringUtils;
 
 import java.util.Optional;
+
+import static se.dzm.electricvehiclechargingstationmanagement.util.MapperHelper.get;
 
 @Configuration
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
@@ -21,7 +24,7 @@ public class AuditConfig {
         @Override
         public Optional<String> getCurrentAuditor() {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            if (auth == null || auth.getName() == null || auth.getName().trim().length() == 0 || auth.getName().equals("anonymousUser"))
+            if (get(() -> !StringUtils.hasLength(auth.getName())) || auth.getName().equals("anonymousUser"))
                 return Optional.ofNullable("b.mohamadi");
             return Optional.ofNullable(auth.getName());
         }
