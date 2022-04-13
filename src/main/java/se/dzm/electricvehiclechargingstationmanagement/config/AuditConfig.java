@@ -24,7 +24,7 @@ public class AuditConfig {
         @Override
         public Optional<String> getCurrentAuditor() {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            if (get(() -> !StringUtils.hasLength(auth.getName())) || auth.getName().equals("anonymousUser"))
+            if (!StringUtils.hasLength(get(() -> auth.getName())) || auth.getName().equals("anonymousUser"))
                 return Optional.ofNullable("b.mohamadi");
             return Optional.ofNullable(auth.getName());
         }
