@@ -18,21 +18,27 @@ mvn clean install
 java -jar target/electric-vehicle-charging-station-management-1.0.0-SNAPSHOT.jar
 ```
 ## Kubernetes configuration
-For API scalability, kubernetes should be installed and the following commands must be executed for deploying the images:
+For API scalability, Kubernetes should be installed and submit the yml files that definition to kube directory with the following command:
 ```
 kubectl apply -f kube
-kubectl get pods | grep electric
-kubectl get pods | grep postgres
 ```
-Note: If any container of related images has already been started by Docker Compos, must be stopped that containers to prevent the port from being occupied with the following commands:
+to watch Pods coming alive with:
 ```
-docker stop electric-vehicle-charging-station-management_app_1
-docker stop postgresql-container
+kubectl get pods --watch
 ```
-Finally, for checking application interface, should port forward pods on current OS with the following commands:
+Finally, for checking application interface, choose one of these solutions:<br/>
+* port forward pods on current OS with pod name from previous `--watch` command:
+    ```
+    kubectl port-forward electric-vehicle-charging-station-management-84f9fb9f45-5cxxq 2022:2022&
+    kubectl port-forward postgres-db-744f8c7f74-b2gnk 5432:5432&
+    ```
+* get URL of the application service:
+    ```
+    minikube service electric-vehicle-charging-station-management --url
+    ```
+Scaling the application to increase the number of replicas to 2 or more:
 ```
-kubectl port-forward electric-vehicle-charging-station-management 2022:2022&
-kubectl port-forward postgres-db 5432:5432&
+ubectl scale --replicas=2 deployment/electric-vehicle-charging-station-management
 ```
 After finishing installation click on the [Link](http://localhost:2022) to display login form with `admin` userName and `12345` password by `ADMIN_ROLE`.<br/> Also, you can register a new user on login form by `USER_ROLE`.<br/> After login there are 4 web forms to consuming APIs.<br/>In addition, the swagger-UI [Link](http://localhost:2022/swagger-ui.html) exists to check all APIs.
 ## Introduction
