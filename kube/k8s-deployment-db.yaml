@@ -22,6 +22,7 @@ spec:
           name: postgres
           resources: {}
 status: {}
+---
 apiVersion: v1
 kind: Service
 metadata:

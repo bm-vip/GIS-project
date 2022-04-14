@@ -20,8 +20,7 @@ java -jar target/electric-vehicle-charging-station-management-1.0.0-SNAPSHOT.jar
 ## Kubernetes configuration
 For API scalability, kubernetes should be installed and the following commands must be executed for deploying the images:
 ```
-kubectl apply -f k8s-deployment-app.yaml
-kubectl apply -f k8s-deployment-db.yaml
+kubectl apply -f kube
 kubectl get pods | grep electric
 kubectl get pods | grep postgres
 ```
