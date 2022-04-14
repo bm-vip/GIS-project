@@ -40,6 +40,7 @@ Scaling the application to increase the number of replicas to 2 or more:
 ```
 ubectl scale --replicas=2 deployment/electric-vehicle-charging-station-management
 ```
+## How to run the application
 After finishing installation click on the [Link](http://localhost:2022) to display login form with `admin` userName and `12345` password by `ADMIN_ROLE`.<br/> Also, you can register a new user on login form by `USER_ROLE`.<br/> After login there are 4 web forms to consuming APIs.<br/>In addition, the swagger-UI [Link](http://localhost:2022/swagger-ui.html) exists to check all APIs.
 ## Introduction
 The task is to implement Rest-API for the electric vehicle charging station management
