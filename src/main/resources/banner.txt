@@ -1,8 +1,9 @@
+${AnsiColor.GREEN}
 ,------. ,--.   ,--.  ,-----.  ,---.   ,--.   ,--.
 |  .---'  \  `.'  /  '  .--./ '   .-'  |   `.'   |
 |  `--,    \     /   |  |     `.  `-.  |  |'.'|  |
 |  `---.    \   /    '  '--'\ .-'    | |  |   |  |
 `------'     `-'      `-----' `-----'  `--'   `--'
 
-${spring.application.name} ${spring-boot.formatted-version}
-Powered by Spring Boot ${spring-boot.version}
+::${spring.application.name}::  ${AnsiColor.WHITE}(v${spring.application.version})
+${AnsiColor.BLUE}Powered by Spring Boot ${spring-boot.version}
