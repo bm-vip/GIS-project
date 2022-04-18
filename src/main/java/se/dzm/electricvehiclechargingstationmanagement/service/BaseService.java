@@ -14,7 +14,7 @@ public interface BaseService<M extends BaseModel<ID>, ID extends Serializable> {
     Page<Select2Model> findAllSelect(M model, Pageable pageable);
     Long countAll(M filter);
     M findById(ID id);
-    M save(M entity);
+    M save(M model);
     void deleteById(ID id);
 
 
