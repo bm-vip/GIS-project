@@ -3,26 +3,29 @@ package se.dzm.electricvehiclechargingstationmanagement.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 /**
-* Created by Behrooz.Mohamadi on 24/03/2022.
+ * Created by Behrooz.Mohamadi on 24/03/2022.
  */
 @Data
 public class StationModel extends BaseModel<Long> {
 
-    @NotNull(message = "Name is mandatory")
-    @NotBlank(message = "Name is mandatory")
+    @NotNull
+    @NotBlank
     private String name;
-    @NotNull(message = "latitude is mandatory")
-    @Pattern(regexp = "[\\s]*[0-9]*[1-9]+",message="latitude must be positive")
+    @NotNull
+    @Min(value = -90)
+    @Max(value = 90)
     private Double latitude;
-    @NotNull(message = "longitude is mandatory")
-    @Pattern(regexp = "[\\s]*[0-9]*[1-9]+",message="longitude must be positive")
+    @NotNull
+    @Min(value = -180)
+    @Max(value = 180)
     private Double longitude;
-    @NotNull(message = "company is mandatory")
+    @NotNull
     private CompanyModel company;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Double distance;

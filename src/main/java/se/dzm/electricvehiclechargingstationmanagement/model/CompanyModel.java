@@ -13,8 +13,8 @@ import java.util.List;
 @Data
 public class CompanyModel extends BaseModel<Long> {
 
-    @NotNull(message = "Name is mandatory")
-    @NotBlank(message = "Name is mandatory")
+    @NotNull
+    @NotBlank
     private String name;
     private CompanyModel parent;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

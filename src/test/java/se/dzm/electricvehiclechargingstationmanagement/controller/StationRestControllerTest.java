@@ -78,7 +78,7 @@ class StationRestControllerTest {
 
     @WithMockUser(roles="ADMIN")
     @Test
-    void findById_shouldThrowNotFoundError() throws Exception {
+    void findById_shouldReturn404NotFound() throws Exception {
         mockMvc.perform(get("/api/v1/station/findById/{id}", 44L))
                 .andExpect(status().isNotFound());
     }
@@ -137,6 +137,14 @@ class StationRestControllerTest {
                 .andExpect(jsonPath("$.[7].distance").value(10.13))
                 .andExpect(jsonPath("$.[8].distance").value(12.08))
                 .andExpect(jsonPath("$.[9].distance").value(15.41))
+        ;
+    }
+
+    @WithMockUser(roles="ADMIN")
+    @Test
+    void findAllByLocation_shouldReturn400BadRequest() throws Exception {
+        mockMvc.perform(get("/api/v1/station/findAllByLocation/{latitude}/{longitude}",-99,188).param("companyId","0"))
+                .andExpect(status().isBadRequest())
         ;
     }
 }

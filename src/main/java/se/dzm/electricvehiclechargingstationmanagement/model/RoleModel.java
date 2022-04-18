@@ -7,8 +7,8 @@ import javax.validation.constraints.NotNull;
 
 @Data
 public class RoleModel extends BaseModel<Long> {
-	@NotNull(message = "role is mandatory")
-	@NotBlank(message = "role is mandatory")
+	@NotNull
+	@NotBlank
 	private String role;
 	private String title;
 }

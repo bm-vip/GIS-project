@@ -9,19 +9,19 @@ import java.util.Set;
 
 @Data
 public class UserModel extends BaseModel<Long> {
-    @NotNull(message = "userName is mandatory")
-    @NotBlank(message = "userName is mandatory")
+    @NotNull
+    @NotBlank
     private String userName;
-    @Email(message = "email is not valid")
+    @Email
     private String email;
-    @NotNull(message = "password is mandatory")
-    @NotBlank(message = "password is mandatory")
+    @NotNull
+    @NotBlank
     private String password;
-    @NotNull(message = "firstName is mandatory")
-    @NotBlank(message = "firstName is mandatory")
+    @NotNull
+    @NotBlank
     private String firstName;
-    @NotNull(message = "lastName is mandatory")
-    @NotBlank(message = "lastName is mandatory")
+    @NotNull
+    @NotBlank
     private String lastName;
     private Boolean active;
     private Set<RoleModel> roles;

@@ -9,12 +9,12 @@ import java.util.Date;
 
 @Data
 public class BaseModel<ID extends Serializable> implements Serializable {
-    private final ID id;
+    private ID id;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     protected Date modifiedDate;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     protected Date createdDate;;
-    protected final int version;
+    protected int version;
     @JsonIgnore
     private String selectTitle;
 }
