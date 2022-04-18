@@ -15,8 +15,8 @@ public class SpringMvcExceptionHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<?> handleConstraintViolationException(ConstraintViolationException exception) {
         String details = exception.getConstraintViolations().stream()
-                .map(m -> String.format("%s %s %s", m.getRootBeanClass().getName(), m.getPropertyPath(), m.getMessage()))
-                .collect(Collectors.joining(", ", "{", "}"));
+                .map(m -> String.format("{%s %s %s}", m.getRootBeanClass().getName(), m.getPropertyPath(), m.getMessage()))
+                .collect(Collectors.joining(", "));
 //        var apiError = new ApiErrorModel(request.getDescription(false), BAD_REQUEST, exception.getMessage(), errors);
         log.error(details);
         return ResponseEntity.badRequest().body(exception.getMessage());
