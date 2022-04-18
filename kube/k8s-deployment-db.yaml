@@ -20,8 +20,8 @@ spec:
       containers:
         - image: postgres
           name: postgres
-          imagePullPolicy: Never
           resources: {}
+          imagePullPolicy: Never
 status: {}
 ---
 apiVersion: v1

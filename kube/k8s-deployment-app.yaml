@@ -21,7 +21,7 @@ spec:
         - image: electric-vehicle-charging-station-management-image
           name: electric-vehicle-charging-station-management-image
           resources: {}
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Never
 status: {}
 ---
 apiVersion: v1
