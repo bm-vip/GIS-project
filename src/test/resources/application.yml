@@ -2,8 +2,9 @@ server.port: 2022
 
 # Spring Boot configuration
 spring:
-  application.name: electric-vehicle-charging-station-management
-  application.version: @project.version@
+  application:
+    name: electric-vehicle-charging-station-management
+    version: 1.0.0-SNAPSHOT
   liquibase:
     contexts: test
     change-log: "classpath:/db/changelog/master.xml"

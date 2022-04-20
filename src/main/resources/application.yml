@@ -5,8 +5,9 @@ server:
     include-binding-errors: always
 # Spring Boot configuration
 spring:
-  application.name: electric-vehicle-charging-station-management
-  application.version: @project.version@
+  application:
+    name: electric-vehicle-charging-station-management
+    version: @project.version@
   liquibase.change-log: "classpath:/db/changelog/master.xml"
   queries:
     users-query: select user_name, password, active_flag from tbl_user where user_name=?
