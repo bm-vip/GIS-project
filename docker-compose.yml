@@ -4,7 +4,7 @@ services:
     image: electric-vehicle-charging-station-management-image
     build:
       context: ./
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile_withoutGit
     ports:
       - "2022:2022"
     environment:
