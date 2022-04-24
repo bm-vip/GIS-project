@@ -20,7 +20,7 @@ services:
     container_name: postgresql-container
     restart: unless-stopped
     volumes:
-      - ./schema.sql:db/schema.sql
+      - ./db/schema.sql:/docker-entrypoint-initdb.d
     ports:
       - "5432:5432"
     environment:
