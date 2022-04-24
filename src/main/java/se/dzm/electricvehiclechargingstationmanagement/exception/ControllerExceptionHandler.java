@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 @Slf4j
-public class SpringMvcExceptionHandler {
+public class ControllerExceptionHandler {
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<?> handleConstraintViolationException(ConstraintViolationException exception) {
