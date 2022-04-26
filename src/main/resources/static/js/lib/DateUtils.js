@@ -16,33 +16,33 @@ function toGregorianString(shamsiString, showTime) {
     if (resources.local === "fa") {
         return shamsiStringTogregorianString(shamsiString, showTime);
     } else {
-        var date = dateSpliter(shamsiString);
-        var year = "{0}-{1}-{2}".format(date.year, date.month, date.day);
+        var datePart = dateSpliter(shamsiString);
+        var dateOnly = "{0}-{1}-{2}".format(datePart.year, datePart.month, datePart.day);
         if (!isNullOrEmpty(showTime) && showTime) {
             return "{0}T{1}:{2}:{3}".format(
-                year,
-                date.hour,
-                date.minute,
-                date.second);
+                dateOnly,
+                datePart.hour,
+                datePart.minute,
+                datePart.second);
         }
-        return year;
+        return dateOnly;
     }
 }
 
 function shamsiStringTogregorianString(shamsiString, showTime) {
     if (isNullOrEmpty(shamsiString)) return null;
     shamsiString = persianDigitToEnglish(shamsiString);
-    var date = dateSpliter(shamsiString);
-    var json = toGregorian(parseInt(date.year), parseInt(date.month), parseInt(date.day));
-    var year = "{0}-{1}-{2}".format(json.gy, addZero(json.gm), addZero(json.gd));
+    var datePart = dateSpliter(shamsiString);
+    var gregorian = toGregorian(parseInt(datePart.year), parseInt(datePart.month), parseInt(datePart.day));
+    var gregorianDate = "{0}-{1}-{2}".format(gregorian.gy, addZero(gregorian.gm), addZero(gregorian.gd));
     if (!isNullOrEmpty(showTime) && showTime) {
         return "{0}T{1}:{2}:{3}".format(
-            year,
-            addZero(date.hour),
-            addZero(date.minute),
-            addZero(date.second));
+            gregorianDate,
+            addZero(datePart.hour),
+            addZero(datePart.minute),
+            addZero(datePart.second));
     }
-    return year;
+    return gregorianDate;
 }
 
 function addZero(value) {
@@ -53,17 +53,17 @@ function addZero(value) {
 
 function gregorianStringToShamsiString(gregorianString, showTime) {
     if (isNullOrEmpty(gregorianString)) return null;
-    var date = dateSpliter(gregorianString);
-    var json = toJalaali(parseInt(date.year), parseInt(date.month), parseInt(date.day));
-    var year = "{0}/{1}/{2}".format(json.jy, json.jm, json.jd);
+    var datePart = dateSpliter(gregorianString);
+    var jalali = toJalaali(parseInt(datePart.year), parseInt(datePart.month), parseInt(datePart.day));
+    var jalaliDate = "{0}/{1}/{2}".format(jalali.jy, jalali.jm, jalali.jd);
     if (!isNullOrEmpty(showTime) && showTime) {
         return "{0}T{1}:{2}:{3}".format(
-            year,
-            date.hour,
-            date.minute,
-            date.second);
+            jalaliDate,
+            datePart.hour,
+            datePart.minute,
+            datePart.second);
     }
-    return year;
+    return jalaliDate;
 }
 
 function dateSpliter(dateString) {
@@ -75,14 +75,14 @@ function dateSpliter(dateString) {
     }
     var spliter = '/';
     if (isArray(dateString)) {
-        var year = dateString[0];
+        var dateOnly = dateString[0];
         var time = dateString[1];
-        if (year.indexOf('-') > -1)
+        if (dateOnly.indexOf('-') > -1)
             spliter = '-';
         return {
-            year: parseInt(year.split(spliter)[0]),
-            month: parseInt(year.split(spliter)[1]),
-            day: parseInt(year.split(spliter)[2]),
+            year: parseInt(dateOnly.split(spliter)[0]),
+            month: parseInt(dateOnly.split(spliter)[1]),
+            day: parseInt(dateOnly.split(spliter)[2]),
             hour: parseInt(time.split(':')[0]),
             minute: parseInt(time.split(':')[1]),
             second: parseInt(time.split(':')[2])
