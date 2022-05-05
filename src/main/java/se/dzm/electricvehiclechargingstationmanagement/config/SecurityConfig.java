@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers("/logout","/notfound","/login","/registration").permitAll()
-                .antMatchers("/company","/station").hasAnyRole(name(USER),name(SUPER_WISER),name(GUEST),name(ADMIN))
+                .antMatchers("/company","/station","/nearestStation","/api/v1/company/**","/api/v1/station/**").hasAnyRole(name(ADMIN),name(SUPER_WISER),name(USER),name(GUEST))
                 .antMatchers("/dashboard").hasAnyRole(name(SUPER_WISER),name(ADMIN))
                 .antMatchers("/**").hasRole(name(ADMIN))
                 .anyRequest().authenticated()

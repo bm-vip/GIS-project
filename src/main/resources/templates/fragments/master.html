@@ -57,25 +57,26 @@
                     <div class="menu_section">
 
                         <ul class="nav side-menu">
-                            <th:block sec:authorize="hasAnyRole('ADMIN','SUPER_WISER')">
-                                <li><a><i class="fa fa-home"></i>
-                                    <th:block th:text="#{home}"></th:block>
-                                    <span class="fa fa-chevrnon-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li><a th:href="@{/dashboard}" th:text="#{dashboard}"></a></li>
-                                    </ul>
-                                </li>
-                            </th:block>
-                                <li><a><i class="fa fa-edit"></i>
-                                    <th:block th:text="#{baseInfo}"></th:block>
-                                    <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li><a th:href="@{/company}" th:text="#{company}"></a></li>
-                                        <li><a th:href="@{/station}" th:text="#{station}"></a></li>
-                                        <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/userManagement}" th:text="#{userManagement}"></a></li>
-                                    </ul>
-                                </li>
-                            <li class="sub_menu"><a th:href="@{/nearestStation}"><i class="fa fa-globe"></i><th:block th:text="#{nearestStation}"></th:block></a></li>
+                            <li sec:authorize="hasAnyRole('ADMIN','SUPER_WISER')"><a><i class="fa fa-home"></i>
+                                <th:block th:text="#{home}"></th:block>
+                                <span class="fa fa-chevrnon-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a th:href="@{/dashboard}" th:text="#{dashboard}"></a></li>
+                                </ul>
+                            </li>
+                            <li><a><i class="fa fa-edit"></i>
+                                <th:block th:text="#{baseInfo}"></th:block>
+                                <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a th:href="@{/company}" th:text="#{company}"></a></li>
+                                    <li><a th:href="@{/station}" th:text="#{station}"></a></li>
+                                    <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/userManagement}"
+                                                                            th:text="#{userManagement}"></a></li>
+                                </ul>
+                            </li>
+                            <li class="sub_menu"><a th:href="@{/nearestStation}"><i class="fa fa-globe"></i>
+                                <th:block th:text="#{nearestStation}"></th:block>
+                            </a></li>
                         </ul>
                     </div>
                 </div>
@@ -114,9 +115,12 @@
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                <li><a href="javascript:changeUrlParameterAndReload('lang','fa')" th:text="#{persian} "></a></li>
-                                <li><a href="javascript:changeUrlParameterAndReload('lang','en')" th:text="#{english} "></a></li>
-                                <li><a href="javascript:changeUrlParameterAndReload('lang','ru')" th:text="#{russia} "></a></li>
+                                <li><a href="javascript:changeUrlParameterAndReload('lang','fa')"
+                                       th:text="#{persian} "></a></li>
+                                <li><a href="javascript:changeUrlParameterAndReload('lang','en')"
+                                       th:text="#{english} "></a></li>
+                                <li><a href="javascript:changeUrlParameterAndReload('lang','ru')"
+                                       th:text="#{russia} "></a></li>
                                 <li><a th:href="@{/logout}"><i class="fa fa-sign-out pull-right"></i>
                                     <th:block th:text="#{exit}"></th:block>
                                 </a></li>
