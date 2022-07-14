@@ -2,17 +2,27 @@
 ## Installation
 You have 2 ways for installation:\
 Before running the application, the following commands must be executed in the terminal from the project root directory:
-1. prerequisites for using Docker (recommended) 
+1. prerequisites for using Dockerfile_with_Git (will get source from git repository and make jar file automatically, and then it's very simple) 
    1. Install Docker
-   2. run the following command:
+   2. replace its name by Dockerfile
+   3. run the following command:
 ```
 docker-compose up
 ```
-2. Prerequisites for using current OS
+2. Prerequisites for using Dockerfile (recommended)
    1. Install Java 17
-   2. Install Postgres sql database
-   3. Maven 3
+   2. Maven 3
+   3. Install Docker
    4. run the following command:
+```
+mvn clean install
+docker-compose up
+```
+3. Prerequisites for using current OS
+    1. Install Java 17
+    2. Install Postgres sql database
+    3. Maven 3
+    4. run the following command:
 ```
 mvn clean install
 java -jar target/electric-vehicle-charging-station-management-1.0.0-SNAPSHOT.jar
