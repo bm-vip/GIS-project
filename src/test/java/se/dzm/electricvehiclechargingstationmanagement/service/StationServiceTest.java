@@ -1,11 +1,12 @@
 package se.dzm.electricvehiclechargingstationmanagement.service;
 
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.BooleanBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import se.dzm.electricvehiclechargingstationmanagement.entity.CompanyEntity;
+import se.dzm.electricvehiclechargingstationmanagement.entity.QStationEntity;
 import se.dzm.electricvehiclechargingstationmanagement.entity.StationEntity;
 import se.dzm.electricvehiclechargingstationmanagement.model.StationModel;
 import se.dzm.electricvehiclechargingstationmanagement.repository.StationRepository;
@@ -15,7 +16,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -40,7 +40,7 @@ public class StationServiceTest {
         stationEntities.add(new StationEntity(){{setCompany(new CompanyEntity(){{setId(1L);}});setLatitude(29.014746);setLongitude(53.212981);}});
         stationEntities.add(new StationEntity(){{setCompany(new CompanyEntity(){{setId(1L);}});setLatitude(31.594328);setLongitude(49.123338);}});
         stationEntities.add(new StationEntity(){{setCompany(new CompanyEntity(){{setId(1L);}});setLatitude(38.390648);setLongitude(45.165619);}});
-        when(stationRepository.findAll(any(Predicate.class))).thenReturn(stationEntities);
+        when(stationRepository.findAll(new BooleanBuilder(QStationEntity.stationEntity.company.id.eq(1L)))).thenReturn(stationEntities);
 
         //test findAllByLocation service
         List<StationModel> stationModels = stationService.findAllByLocation(1L, 35.294952, 53.715041);

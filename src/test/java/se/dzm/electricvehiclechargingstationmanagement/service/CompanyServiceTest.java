@@ -7,7 +7,7 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import se.dzm.electricvehiclechargingstationmanagement.entity.CompanyEntity;
 import se.dzm.electricvehiclechargingstationmanagement.model.CompanyModel;
 import se.dzm.electricvehiclechargingstationmanagement.repository.CompanyRepository;
 
@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -29,10 +28,10 @@ public class CompanyServiceTest {
     @Test
     public void findAllByParentId_passCompanyId1ThenShouldReturn2Companies() {
         //mock db
-        List<CompanyModel> companyModels = new ArrayList<>();
-        companyModels.add(new CompanyModel(){{setId(1L);setParent(new CompanyModel(){{setId(1L);}});setName("company B");}});
-        companyModels.add(new CompanyModel(){{setId(2L);setParent(new CompanyModel(){{setId(1L);}});setName("company C");}});
-        when(companyService.findAllByParentId(1L,any(Pageable.class))).thenReturn(new PageImpl<>(companyModels));
+        List<CompanyEntity> companyEntities = new ArrayList<>();
+        companyEntities.add(new CompanyEntity(){{setId(1L);setParent(new CompanyEntity(){{setId(1L);}});setName("company B");}});
+        companyEntities.add(new CompanyEntity(){{setId(2L);setParent(new CompanyEntity(){{setId(1L);}});setName("company C");}});
+        when(companyRepository.findByParentId(1L, PageRequest.of(0, 10))).thenReturn(new PageImpl<>(companyEntities));
 
         //test findAllByParentId service
         Page<CompanyModel> companyModelPage = companyService.findAllByParentId(1L, PageRequest.of(0, 10));
