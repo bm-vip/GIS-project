@@ -41,8 +41,8 @@ kubectl get pods --watch
 Finally, for checking application interface, choose one of these solutions:<br/>
 * port forward pods on current OS with pod name from previous `--watch` command:
     ```
-    kubectl port-forward electric-vehicle-charging-station-management-84f9fb9f45-5cxxq 2022:2022&
-    kubectl port-forward postgres-db-744f8c7f74-b2gnk 5432:5432&
+    kubectl port-forward svc/electric-vehicle-charging-station-management 2022:80&
+    kubectl port-forward svc/postgres-db 5432:80&
     ```
 * get URL of the application service:
     ```
@@ -50,7 +50,7 @@ Finally, for checking application interface, choose one of these solutions:<br/>
     ```
 Scaling the application to increase the number of replicas to 2 or more:
 ```
-ubectl scale --replicas=2 deployment/electric-vehicle-charging-station-management
+kubectl scale --replicas=2 deployment/electric-vehicle-charging-station-management
 ```
 ## Introduction
 The task is to implement Rest-API for the electric vehicle charging station management
