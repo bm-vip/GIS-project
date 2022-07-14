@@ -2,7 +2,6 @@ package se.dzm.electricvehiclechargingstationmanagement.service.impl;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import se.dzm.electricvehiclechargingstationmanagement.entity.QRoleEntity;
@@ -18,10 +17,9 @@ import static se.dzm.electricvehiclechargingstationmanagement.util.MapperHelper.
 @Service
 public class RoleServiceImpl extends BaseServiceImpl<RoleModel, RoleEntity, Long> implements RoleService {
 
-    private RoleRepository repository;
-    private RoleMapper mapper;
+    private final RoleRepository repository;
+    private final RoleMapper mapper;
 
-    @Autowired
     public RoleServiceImpl(RoleRepository repository, RoleMapper mapper) {
         super(repository, mapper);
         this.repository = repository;

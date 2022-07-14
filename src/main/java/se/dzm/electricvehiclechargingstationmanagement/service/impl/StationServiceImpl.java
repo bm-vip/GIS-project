@@ -2,7 +2,6 @@ package se.dzm.electricvehiclechargingstationmanagement.service.impl;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import se.dzm.electricvehiclechargingstationmanagement.entity.QStationEntity;
@@ -14,6 +13,7 @@ import se.dzm.electricvehiclechargingstationmanagement.model.StationModel;
 import se.dzm.electricvehiclechargingstationmanagement.repository.StationRepository;
 import se.dzm.electricvehiclechargingstationmanagement.service.StationService;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -24,10 +24,9 @@ import static se.dzm.electricvehiclechargingstationmanagement.util.MapperHelper.
 @Service
 public class StationServiceImpl extends BaseServiceImpl<StationModel, StationEntity, Long> implements StationService {
 
-    private StationRepository stationRepository;
-    private StationMapper stationMapper;
+    private final StationRepository stationRepository;
+    private final StationMapper stationMapper;
 
-    @Autowired
     public StationServiceImpl(StationRepository repository, StationMapper mapper) {
         super(repository, mapper);
         this.stationRepository = repository;
@@ -62,7 +61,7 @@ public class StationServiceImpl extends BaseServiceImpl<StationModel, StationEnt
                     model.setDistance(distance(latitude, longitude, model.getLatitude(), model.getLongitude(), DistanceType.Kilometers));
                     return model;
                 })
-                .sorted((o1, o2) -> o1.getDistance().compareTo(o2.getDistance()))
+                .sorted(Comparator.comparing(StationModel::getDistance))
                 .collect(Collectors.toList());
     }
 }

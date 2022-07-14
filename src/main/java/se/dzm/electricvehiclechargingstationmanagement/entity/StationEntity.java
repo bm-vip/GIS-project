@@ -3,6 +3,9 @@ package se.dzm.electricvehiclechargingstationmanagement.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -21,12 +24,19 @@ public class StationEntity extends BaseEntity<Long> {
     private Long id;
 
     @NotNull
+    @NotBlank
     private String name;
 
     @Column(name = "lat", nullable = false)
+    @NotNull
+    @Min(value = -90)
+    @Max(value = 90)
     private Double latitude;
 
     @Column(name = "lng", nullable = false)
+    @NotNull
+    @Min(value = -180)
+    @Max(value = 180)
     private Double longitude;
 
     @ManyToOne

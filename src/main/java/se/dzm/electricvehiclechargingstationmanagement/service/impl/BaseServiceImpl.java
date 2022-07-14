@@ -1,6 +1,7 @@
 package se.dzm.electricvehiclechargingstationmanagement.service.impl;
 
 import com.querydsl.core.types.Predicate;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,16 +16,11 @@ import se.dzm.electricvehiclechargingstationmanagement.service.BaseService;
 
 import java.io.Serializable;
 import java.util.Objects;
-
+@RequiredArgsConstructor
 public abstract class BaseServiceImpl<M extends BaseModel<ID>, E extends BaseEntity<ID>, ID extends Serializable> implements BaseService<M, ID> {
 
     public final BaseRepository<E, ID> repository;
     public final BaseMapper<M, E> mapper;
-
-    public BaseServiceImpl(BaseRepository<E, ID> repository, BaseMapper<M, E> mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
-    }
 
     public abstract Predicate queryBuilder(M filter);
 

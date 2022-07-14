@@ -28,10 +28,10 @@ import static se.dzm.electricvehiclechargingstationmanagement.util.MapperHelper.
 @Service
 public class UserServiceImpl extends BaseServiceImpl<UserModel, UserEntity, Long> implements UserService {
 
-    private UserRepository userRepository;
-    private UserMapper userMapper;
-    private RoleService roleService;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
+    private final RoleService roleService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, RoleService roleService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         super(userRepository, userMapper);

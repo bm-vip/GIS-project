@@ -17,8 +17,8 @@ import static se.dzm.electricvehiclechargingstationmanagement.util.MapperHelper.
 
 @Service
 public class CompanyServiceImpl extends BaseServiceImpl<CompanyModel, CompanyEntity, Long> implements CompanyService {
-    private CompanyRepository repository;
-    private CompanyMapper mapper;
+    private final CompanyRepository repository;
+    private final CompanyMapper mapper;
 
     public CompanyServiceImpl(CompanyRepository repository, CompanyMapper mapper) {
         super(repository, mapper);

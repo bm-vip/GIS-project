@@ -123,7 +123,7 @@ class StationRestControllerTest {
 
     @WithMockUser(roles="ADMIN")
     @Test
-    void findAllByLocation_shouldReturnStationModelsOrderByDistance() throws Exception {
+    void findAllByLocation_passCorrectLatAndLonThenShouldReturnStationModelsOrderByDistance() throws Exception {
         mockMvc.perform(get("/api/v1/station/findAllByLocation/{latitude}/{longitude}",35.294952,53.715041).param("companyId","1"))
                 .andExpect(status().isOk())
                 .andExpect((jsonPath("$.*", Matchers.hasSize(10))))
@@ -142,7 +142,7 @@ class StationRestControllerTest {
 
     @WithMockUser(roles="ADMIN")
     @Test
-    void findAllByLocation_shouldReturn400BadRequest() throws Exception {
+    void findAllByLocation_passIncorrectLatAndLonThenshouldReturn400BadRequest() throws Exception {
         mockMvc.perform(get("/api/v1/station/findAllByLocation/{latitude}/{longitude}",-99,188).param("companyId","0"))
                 .andExpect(status().isBadRequest())
         ;
