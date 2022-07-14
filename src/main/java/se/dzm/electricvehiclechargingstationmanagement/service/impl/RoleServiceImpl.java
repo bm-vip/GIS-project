@@ -18,12 +18,10 @@ import static se.dzm.electricvehiclechargingstationmanagement.util.MapperHelper.
 public class RoleServiceImpl extends BaseServiceImpl<RoleModel, RoleEntity, Long> implements RoleService {
 
     private final RoleRepository repository;
-    private final RoleMapper mapper;
 
     public RoleServiceImpl(RoleRepository repository, RoleMapper mapper) {
         super(repository, mapper);
         this.repository = repository;
-        this.mapper = mapper;
     }
 
     @Override

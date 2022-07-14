@@ -25,12 +25,10 @@ import static se.dzm.electricvehiclechargingstationmanagement.util.MapperHelper.
 public class StationServiceImpl extends BaseServiceImpl<StationModel, StationEntity, Long> implements StationService {
 
     private final StationRepository stationRepository;
-    private final StationMapper stationMapper;
 
     public StationServiceImpl(StationRepository repository, StationMapper mapper) {
         super(repository, mapper);
         this.stationRepository = repository;
-        this.stationMapper = mapper;
     }
 
     @Override
@@ -57,7 +55,7 @@ public class StationServiceImpl extends BaseServiceImpl<StationModel, StationEnt
         StationModel filter = new StationModel(){{setCompany(new CompanyModel(){{setId(companyId);}});}};
         return StreamSupport.stream(stationRepository.findAll(queryBuilder(filter)).spliterator(), false)
                 .map(entity -> {
-                    StationModel model = stationMapper.toModel(entity);
+                    StationModel model = mapper.toModel(entity);
                     model.setDistance(distance(latitude, longitude, model.getLatitude(), model.getLongitude(), DistanceType.Kilometers));
                     return model;
                 })
