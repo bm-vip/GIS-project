@@ -2,6 +2,7 @@ package se.dzm.electricvehiclechargingstationmanagement.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -20,6 +21,7 @@ import java.util.Date;
 @Data
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
+@Audited
 public abstract class BaseEntity<ID extends Serializable> implements Serializable {
 
     @JsonIgnore

@@ -54,12 +54,21 @@ window.onload = function () {
 
     $(".table:not(#myModal .table)").on("click", ".fa-trash", function (e) {
         if (confirm(resources.areYouSure)) {
-            $.post(ajaxUrl + "/deleteById/" + $(this).attr("id"), function (data) {
-                if (data.error == null) {
-                    $.publish("reloadTable");
-                    show_success(resources.deleteSuccess);
-                } else {
-                    show_error(data.error);
+            $.ajax({
+                type: "DELETE",
+                url: ajaxUrl + "/deleteById/" + $(this).attr("id"),
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data) {
+                    if (data == undefined) {
+                        $.publish("reloadTable");
+                        show_success(resources.deleteSuccess);
+                    } else {
+                        show_error(data.error);
+                    }
+                },
+                error: function (header, status, error) {
+                    show_error('ajax answer post returned error: ' + header + ' ' + status + ' ' + error);
                 }
             });
         }

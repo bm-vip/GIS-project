@@ -2,6 +2,7 @@ package se.dzm.electricvehiclechargingstationmanagement.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -13,6 +14,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "tbl_company")
+@Audited
 public class CompanyEntity extends BaseEntity<Long> {
 
     private static final long serialVersionUID = 1L;

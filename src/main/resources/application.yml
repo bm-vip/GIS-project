@@ -35,6 +35,11 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
     generate-ddl: true
+    properties:
+      org:
+        hibernate:
+          envers:
+            store_data_at_delete: true
   sql:
     init:
       mode: always
