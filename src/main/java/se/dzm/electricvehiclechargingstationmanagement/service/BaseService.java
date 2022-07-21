@@ -16,6 +16,4 @@ public interface BaseService<M extends BaseModel<ID>, ID extends Serializable> {
     M findById(ID id);
     M save(M model);
     void deleteById(ID id);
-
-
 }

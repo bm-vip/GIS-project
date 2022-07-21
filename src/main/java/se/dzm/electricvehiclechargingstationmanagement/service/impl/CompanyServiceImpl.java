@@ -4,6 +4,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import se.dzm.electricvehiclechargingstationmanagement.entity.CompanyEntity;
@@ -22,6 +23,11 @@ public class CompanyServiceImpl extends BaseServiceImpl<CompanyModel, CompanyEnt
     public CompanyServiceImpl(CompanyRepository repository, CompanyMapper mapper) {
         super(repository, mapper);
         this.repository = repository;
+    }
+
+    @Override
+    public JpaRepository<CompanyEntity,Long> getRepository() {
+        return repository;
     }
 
     @Override

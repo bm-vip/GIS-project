@@ -2,6 +2,7 @@ package se.dzm.electricvehiclechargingstationmanagement.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.annotations.Where;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
@@ -15,7 +16,8 @@ import java.util.List;
 @Entity
 @Table(name = "tbl_company")
 @Audited
-public class CompanyEntity extends BaseEntity<Long> {
+@Where(clause = "deleted=false")
+public class CompanyEntity extends BaseEntity<Long> implements LogicalDeleted{
 
     private static final long serialVersionUID = 1L;
 
@@ -34,6 +36,8 @@ public class CompanyEntity extends BaseEntity<Long> {
     @JsonIgnore
     @OneToMany(mappedBy="company")
     private List<StationEntity> stationList;
+
+    private boolean deleted;
 
     @Override
     public String getSelectTitle() {

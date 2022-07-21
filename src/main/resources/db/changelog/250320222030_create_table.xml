@@ -27,6 +27,7 @@
             <column name="parent_company_id" type="bigint">
                 <constraints nullable="true"/>
             </column>
+            <column name="deleted" type="boolean" defaultValue="0"></column>
         </createTable>
     </changeSet>
     <changeSet id="250320222030-4" author="b.mohamadi">
@@ -51,6 +52,7 @@
             <column name="company_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
+            <column name="deleted" type="boolean" defaultValue="0"></column>
         </createTable>
     </changeSet>
     <changeSet id="250320222030-5" author="b.mohamadi">
