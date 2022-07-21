@@ -1,6 +1,6 @@
 # Electric vehicle charging station management system
 ## Installation
-You have 2 ways for installation:\
+You have 3 ways for installation:\
 Before running the application, the following commands must be executed in the terminal from the project root directory:
 1. prerequisites for using Dockerfile_with_Git (will get source from git repository and make jar file automatically, and then it's very simple) 
    1. Install Docker
