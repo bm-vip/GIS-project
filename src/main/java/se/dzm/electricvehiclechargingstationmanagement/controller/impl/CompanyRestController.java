@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import se.dzm.electricvehiclechargingstationmanagement.controller.LogicalDeletedRestController;
-import se.dzm.electricvehiclechargingstationmanagement.entity.CompanyEntity;
 import se.dzm.electricvehiclechargingstationmanagement.model.CompanyModel;
 import se.dzm.electricvehiclechargingstationmanagement.service.CompanyService;
 import se.dzm.electricvehiclechargingstationmanagement.service.LogicalDeletedService;
@@ -21,7 +20,7 @@ import se.dzm.electricvehiclechargingstationmanagement.service.LogicalDeletedSer
 @RestController
 @Tag(name = "Company Rest Service v1")
 @RequestMapping(value = "/api/v1/company")
-public class CompanyRestController extends BaseRestControllerImpl<CompanyModel, Long> implements LogicalDeletedRestController<CompanyEntity,Long> {
+public class CompanyRestController extends BaseRestControllerImpl<CompanyModel, Long> implements LogicalDeletedRestController<Long> {
 
     private CompanyService companyService;
 
@@ -37,7 +36,7 @@ public class CompanyRestController extends BaseRestControllerImpl<CompanyModel, 
     }
 
     @Override
-    public LogicalDeletedService<CompanyEntity,Long> getService() {
+    public LogicalDeletedService<Long> getService() {
         return companyService;
     }
 }

@@ -6,11 +6,11 @@ import se.dzm.electricvehiclechargingstationmanagement.exception.ResourceNotFoun
 
 import java.io.Serializable;
 
-public interface LogicalDeletedService<E extends LogicalDeleted,ID extends Serializable> {
-    JpaRepository<E, ID> getRepository();
+public interface LogicalDeletedService<ID extends Serializable> {
+    <E extends LogicalDeleted> JpaRepository<E, ID> getRepository();
 
     default void logicalDeleteById(ID id) {
-        E entity = getRepository().findById(id).orElseThrow(() -> new ResourceNotFoundException("id: " + id));
+        var entity = getRepository().findById(id).orElseThrow(() -> new ResourceNotFoundException("id: " + id));
         entity.setDeleted(true);
         getRepository().save(entity);
     }

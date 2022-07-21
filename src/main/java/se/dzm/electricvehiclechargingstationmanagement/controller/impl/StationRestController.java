@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import se.dzm.electricvehiclechargingstationmanagement.controller.LogicalDeletedRestController;
-import se.dzm.electricvehiclechargingstationmanagement.entity.StationEntity;
 import se.dzm.electricvehiclechargingstationmanagement.model.StationModel;
 import se.dzm.electricvehiclechargingstationmanagement.service.LogicalDeletedService;
 import se.dzm.electricvehiclechargingstationmanagement.service.StationService;
@@ -22,7 +21,7 @@ import java.util.List;
 @Tag(name = "Station Rest Service v1")
 @RequestMapping(value = "/api/v1/station")
 @Validated
-public class StationRestController extends BaseRestControllerImpl<StationModel, Long> implements LogicalDeletedRestController<StationEntity,Long> {
+public class StationRestController extends BaseRestControllerImpl<StationModel, Long> implements LogicalDeletedRestController<Long> {
 
     private StationService stationService;
 
@@ -41,7 +40,7 @@ public class StationRestController extends BaseRestControllerImpl<StationModel, 
     }
 
     @Override
-    public LogicalDeletedService<StationEntity,Long> getService() {
+    public LogicalDeletedService<Long> getService() {
         return stationService;
     }
 }
