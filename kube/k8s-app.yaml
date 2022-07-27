@@ -22,6 +22,19 @@ spec:
           name: electric-vehicle-charging-station-management-image
           resources: {}
           imagePullPolicy: Never
+          env:
+          - name: DB_URL
+            value: jdbc:postgresql://postgres-db/evcsm_db
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: db-credentials
+                key: username
+          - name: DB_PASS
+            valueFrom:
+              secretKeyRef:
+                name: db-credentials
+                key: password
 status: {}
 ---
 apiVersion: v1

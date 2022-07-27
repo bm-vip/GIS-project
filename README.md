@@ -39,12 +39,11 @@ to watch Pods coming alive with:
 kubectl get pods --watch
 ```
 Finally, for checking application interface, choose one of these solutions:<br/>
-* port forward services on current OS:
+* port forward services on current OS and click on the [Link](http://localhost:2022) after executing command:
     ```
-    kubectl port-forward svc/electric-vehicle-charging-station-management 2022:80&
-    kubectl port-forward svc/postgres-db 5432:80&
+    kubectl port-forward svc/electric-vehicle-charging-station-management 2022:2022&    
     ```
-* get URL of the application service:
+* Or get URL of the application service:
     ```
     minikube service electric-vehicle-charging-station-management --url
     ```
