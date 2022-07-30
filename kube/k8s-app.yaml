@@ -21,7 +21,7 @@ spec:
         - image: electric-vehicle-charging-station-management-image
           name: electric-vehicle-charging-station-management-image
           resources: {}
-          imagePullPolicy: Never
+          imagePullPolicy: IfNotPresent
           env:
           - name: DB_URL
             value: jdbc:postgresql://postgres-db/evcsm_db
