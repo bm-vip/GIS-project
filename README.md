@@ -28,7 +28,7 @@ mvn clean install
 java -jar target/electric-vehicle-charging-station-management-1.0.0-SNAPSHOT.jar
 ```
 ## Kubernetes configuration
-For API scalability, Kubernetes should be installed and submit the yml files that definition to kube directory with the following command:
+For API scalability, Kubernetes should be installed and submit the yml files that definition to k8s directory with the following command:
 ```
 kubectl apply -f k8s
 ```
