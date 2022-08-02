@@ -32,7 +32,7 @@ After finishing installation click on the [Link](http://localhost:2022) to displ
 ## Kubernetes configuration
 For API scalability, Kubernetes should be installed and submit the yml files that definition to kube directory with the following command:
 ```
-kubectl apply -f kube
+kubectl apply -f k8s
 ```
 to watch Pods coming alive with:
 ```
