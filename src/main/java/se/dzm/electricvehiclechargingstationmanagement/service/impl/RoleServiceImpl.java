@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import se.dzm.electricvehiclechargingstationmanagement.entity.QRoleEntity;
 import se.dzm.electricvehiclechargingstationmanagement.entity.RoleEntity;
-import se.dzm.electricvehiclechargingstationmanagement.exception.ResourceNotFoundException;
+import se.dzm.electricvehiclechargingstationmanagement.exception.NotFoundException;
 import se.dzm.electricvehiclechargingstationmanagement.mapping.RoleMapper;
 import se.dzm.electricvehiclechargingstationmanagement.model.RoleModel;
 import se.dzm.electricvehiclechargingstationmanagement.repository.RoleRepository;
@@ -39,6 +39,6 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleModel, RoleEntity, Long
 
     @Override
     public RoleModel findByRole(String role) {
-        return mapper.toModel(repository.findByRole(role).orElseThrow(() -> new ResourceNotFoundException("role: " + role)));
+        return mapper.toModel(repository.findByRole(role).orElseThrow(() -> new NotFoundException("role: " + role)));
     }
 }

@@ -27,6 +27,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
+        envers:
+          store_data_at_delete: true
     show-sql: false
     database: H2
     database-platform: org.hibernate.dialect.H2Dialect

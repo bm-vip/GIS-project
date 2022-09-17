@@ -123,27 +123,31 @@ class StationRestControllerTest {
 
     @WithMockUser(roles="ADMIN")
     @Test
-    void findAllByLocation_passCorrectLatAndLonThenShouldReturnStationModelsOrderByDistance() throws Exception {
-        mockMvc.perform(get("/api/v1/station/findAllByLocation/{latitude}/{longitude}",35.294952,53.715041).param("companyId","1"))
+    void findClosest_passCorrectLatAndLonThenShouldReturnStationModelsOrderByDistance() throws Exception {
+        mockMvc.perform(get("/api/v1/station/findClosest/{latitude}/{longitude}",35.700568,51.349122)
+                        .param("companyId","1")
+                        .param("pageNum","0")
+                        .param("pageSize","10"))
                 .andExpect(status().isOk())
-                .andExpect((jsonPath("$.*", Matchers.hasSize(10))))
-                .andExpect(jsonPath("$.[0].distance").value(2.42))
-                .andExpect(jsonPath("$.[1].distance").value(3.17))
-                .andExpect(jsonPath("$.[2].distance").value(3.54))
-                .andExpect(jsonPath("$.[3].distance").value(3.74))
-                .andExpect(jsonPath("$.[4].distance").value(5.23))
-                .andExpect(jsonPath("$.[5].distance").value(7.71))
-                .andExpect(jsonPath("$.[6].distance").value(8.57))
-                .andExpect(jsonPath("$.[7].distance").value(10.13))
-                .andExpect(jsonPath("$.[8].distance").value(12.08))
-                .andExpect(jsonPath("$.[9].distance").value(15.41))
+                .andExpect(jsonPath("$.totalElements").value(10))
+                .andExpect((jsonPath("$.content", Matchers.hasSize(10))))
+                .andExpect(jsonPath("$.content.[0].name").value("station A1"))
+                .andExpect(jsonPath("$.content.[1].name").value("station A2"))
+                .andExpect(jsonPath("$.content.[2].name").value("station A3"))
+                .andExpect(jsonPath("$.content.[3].name").value("station A4"))
+                .andExpect(jsonPath("$.content.[4].name").value("station A6"))
+                .andExpect(jsonPath("$.content.[5].name").value("station A9"))
+                .andExpect(jsonPath("$.content.[6].name").value("station A10"))
+                .andExpect(jsonPath("$.content.[7].name").value("station A5"))
+                .andExpect(jsonPath("$.content.[8].name").value("station A8"))
+                .andExpect(jsonPath("$.content.[9].name").value("station A7"))
         ;
     }
 
     @WithMockUser(roles="ADMIN")
     @Test
-    void findAllByLocation_passIncorrectLatAndLonThenshouldReturn400BadRequest() throws Exception {
-        mockMvc.perform(get("/api/v1/station/findAllByLocation/{latitude}/{longitude}",-99,188).param("companyId","0"))
+    void findClosest_passIncorrectLatAndLonThenshouldReturn400BadRequest() throws Exception {
+        mockMvc.perform(get("/api/v1/station/findClosest/{latitude}/{longitude}",-99,188).param("companyId","0"))
                 .andExpect(status().isBadRequest())
         ;
     }

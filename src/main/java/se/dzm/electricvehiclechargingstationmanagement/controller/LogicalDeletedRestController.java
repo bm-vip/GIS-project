@@ -17,7 +17,7 @@ public interface LogicalDeletedRestController<ID extends Serializable> {
     LogicalDeletedService<ID> getService();
 
     @DeleteMapping(value = {"/logical-deleteById/{id}"})
-    default ResponseEntity<Void> logicalDeleteById(@PathVariable("id") ID id){
+    default ResponseEntity<Void> logicalDeleteById(@PathVariable("id") ID id) {
         getService().logicalDeleteById(id);
         return ResponseEntity.noContent().build();
     }

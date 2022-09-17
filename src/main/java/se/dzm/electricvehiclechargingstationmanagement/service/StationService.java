@@ -1,9 +1,9 @@
 package se.dzm.electricvehiclechargingstationmanagement.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import se.dzm.electricvehiclechargingstationmanagement.model.StationModel;
 
-import java.util.List;
-
 public interface StationService extends BaseService<StationModel, Long> , LogicalDeletedService<Long> {
-    List<StationModel> findAllByLocation(Long companyId, double latitude, double longitude);
+    Page<StationModel> findClosest(Long companyId, double latitude, double longitude, Pageable pageable);
 }

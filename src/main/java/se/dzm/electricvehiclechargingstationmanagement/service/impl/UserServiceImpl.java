@@ -9,7 +9,7 @@ import se.dzm.electricvehiclechargingstationmanagement.entity.QUserEntity;
 import se.dzm.electricvehiclechargingstationmanagement.entity.UserEntity;
 import se.dzm.electricvehiclechargingstationmanagement.enums.RoleType;
 import se.dzm.electricvehiclechargingstationmanagement.exception.BadRequestException;
-import se.dzm.electricvehiclechargingstationmanagement.exception.ResourceNotFoundException;
+import se.dzm.electricvehiclechargingstationmanagement.exception.NotFoundException;
 import se.dzm.electricvehiclechargingstationmanagement.mapping.UserMapper;
 import se.dzm.electricvehiclechargingstationmanagement.model.RoleModel;
 import se.dzm.electricvehiclechargingstationmanagement.model.UserModel;
@@ -41,7 +41,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserModel, UserEntity, Long
 
     @Override
     public UserModel findByUserName(String userName) {
-        return mapper.toModel(userRepository.findByUserName(userName).orElseThrow(() -> new ResourceNotFoundException("userName: " + userName)));
+        return mapper.toModel(userRepository.findByUserName(userName).orElseThrow(() -> new NotFoundException("userName: " + userName)));
     }
 
     @Override
@@ -63,7 +63,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserModel, UserEntity, Long
         if (StringUtils.hasLength(model.getPassword()))
             model.setPassword(bCryptPasswordEncoder.encode(model.getPassword()));
         if (Objects.nonNull(model.getId())) {
-            UserEntity entity = repository.findById(model.getId()).orElseThrow(() -> new ResourceNotFoundException("id: " + model.getId()));
+            UserEntity entity = repository.findById(model.getId()).orElseThrow(() -> new NotFoundException("id: " + model.getId()));
             return mapper.toModel(repository.save(mapper.updateEntity(model, entity)));
         }
         return mapper.toModel(repository.save(mapper.toEntity(model)));

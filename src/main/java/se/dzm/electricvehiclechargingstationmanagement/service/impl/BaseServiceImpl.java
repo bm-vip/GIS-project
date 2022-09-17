@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import se.dzm.electricvehiclechargingstationmanagement.entity.BaseEntity;
-import se.dzm.electricvehiclechargingstationmanagement.exception.ResourceNotFoundException;
+import se.dzm.electricvehiclechargingstationmanagement.exception.NotFoundException;
 import se.dzm.electricvehiclechargingstationmanagement.mapping.BaseMapper;
 import se.dzm.electricvehiclechargingstationmanagement.model.BaseModel;
 import se.dzm.electricvehiclechargingstationmanagement.model.PageModel;
@@ -55,14 +55,14 @@ public abstract class BaseServiceImpl<M extends BaseModel<ID>, E extends BaseEnt
     @Override
     @Transactional(readOnly = true)
     public M findById(ID id) {
-        E entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("id: " + id));
+        E entity = repository.findById(id).orElseThrow(() -> new NotFoundException("id: " + id));
         return mapper.toModel(entity);
     }
 
     @Override
     public M save(M model) {
         if (Objects.nonNull(model.getId())) {
-            E entity = repository.findById(model.getId()).orElseThrow(() -> new ResourceNotFoundException("id: " + model.getId()));
+            E entity = repository.findById(model.getId()).orElseThrow(() -> new NotFoundException(String.format("%s not found by id %d", model.getClass().getName(), model.getId().toString())));
             return mapper.toModel(repository.save(mapper.updateEntity(model, entity)));
         }
         return mapper.toModel(repository.save(mapper.toEntity(model)));
@@ -70,7 +70,7 @@ public abstract class BaseServiceImpl<M extends BaseModel<ID>, E extends BaseEnt
 
     @Override
     public void deleteById(ID id) {
-        E entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("id: " + id));
+        E entity = repository.findById(id).orElseThrow(() -> new NotFoundException("id: " + id));
         repository.delete(entity);
     }
 }

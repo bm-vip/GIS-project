@@ -33,7 +33,7 @@ public class UserServiceTest {
         UserEntity userEntity = new UserEntity(){{setUserName("admin");setPassword("admin");setActive(true);setEmail("a@a.com");setRoles(Set.of(new RoleEntity(){{setRole("ADMIN");}}));setFirstName("behrooz");setLastName("mohamadi");}};
         when(userRepository.findByUserName("admin")).thenReturn(Optional.of(userEntity));
 
-        //test findAllByLocation service
+        //test findByUserName service
         UserModel userModel = userService.findByUserName("admin");
         assertThat(userModel).isNotNull();
         assertThat(userModel.getEmail()).isNotEmpty().isEqualTo("a@a.com");
@@ -45,7 +45,7 @@ public class UserServiceTest {
         UserEntity userEntity = new UserEntity() {{setId(1L);setUserName("test");setPassword("test");setActive(true);setEmail("test@test.com");setRoles(Set.of(new RoleEntity() {{setRole("USER");}}));setFirstName("test");setLastName("test");}};
         when(userRepository.save(any(UserEntity.class))).thenReturn(userEntity);
 
-        //test findAllByLocation service
+        //test register service
         UserModel actual = userService.register(new UserModel());
         assertThat(actual.getId()).isNotNull();
         assertThat(actual.getPassword()).isNotEmpty().isEqualTo("test");
@@ -57,7 +57,7 @@ public class UserServiceTest {
         UserEntity userEntity = new UserEntity() {{setId(1L);setUserName("test");setPassword("test");setActive(true);setEmail("test@test.com");setRoles(Set.of(new RoleEntity() {{setRole("USER");}}));setFirstName("test");setLastName("test");}};
         when(userRepository.findByUserName(anyString())).thenReturn(Optional.of(userEntity));
 
-        //test findAllByLocation service
+        //test register service
         UserModel userModel = new UserModel(){{setUserName("test");}};
         BadRequestException exception = assertThrows(BadRequestException.class, () -> userService.register(userModel));
         assertThat(exception.getReason()).isEqualTo("userName is already taken!");

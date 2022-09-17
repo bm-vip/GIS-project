@@ -2,8 +2,9 @@ package se.dzm.electricvehiclechargingstationmanagement.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.hibernate.annotations.Where;
-import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,7 +16,6 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "tbl_company")
-@Audited
 @Where(clause = "deleted=false")
 public class CompanyEntity extends BaseEntity<Long> implements LogicalDeleted{
 
@@ -35,6 +35,8 @@ public class CompanyEntity extends BaseEntity<Long> implements LogicalDeleted{
 
     @JsonIgnore
     @OneToMany(mappedBy="company")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<StationEntity> stationList;
 
     private boolean deleted;

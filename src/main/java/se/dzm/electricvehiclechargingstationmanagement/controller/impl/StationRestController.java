@@ -1,6 +1,8 @@
 package se.dzm.electricvehiclechargingstationmanagement.controller.impl;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -12,7 +14,6 @@ import se.dzm.electricvehiclechargingstationmanagement.service.StationService;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import java.util.List;
 
 /**
  * Created by Behrooz.Mohamadi on 25/03/2022.
@@ -30,13 +31,15 @@ public class StationRestController extends BaseRestControllerImpl<StationModel, 
         this.stationService = service;
     }
 
-    @GetMapping(value = {"/findAllByLocation/{latitude}/{longitude}"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity<List<StationModel>> findAllByLocation(
+    @GetMapping(value = {"/findClosest/{latitude}/{longitude}"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity<Page<StationModel>> findClosest(
             @PathVariable("latitude") @Min(value = -90) @Max(value = 90) double latitude
             , @PathVariable("longitude") @Min(value = -180) @Max(value = 180) double longitude
             , @RequestParam(value = "companyId", required = false) Long companyId
+            , @RequestParam int pageNum
+            , @RequestParam int pageSize
     ) {
-        return ResponseEntity.ok(stationService.findAllByLocation(companyId, latitude, longitude));
+        return ResponseEntity.ok(stationService.findClosest(companyId, latitude, longitude, PageRequest.of(pageNum, pageSize)));
     }
 
     @Override

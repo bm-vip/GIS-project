@@ -2,7 +2,6 @@ package se.dzm.electricvehiclechargingstationmanagement.entity;
 
 import lombok.Data;
 import org.hibernate.annotations.Where;
-import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -16,7 +15,6 @@ import javax.validation.constraints.NotNull;
 @Data
 @Entity
 @Table(name = "tbl_station")
-@Audited
 @Where(clause = "deleted=false")
 public class StationEntity extends BaseEntity<Long> implements LogicalDeleted {
 

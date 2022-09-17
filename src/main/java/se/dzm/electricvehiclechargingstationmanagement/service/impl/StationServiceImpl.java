@@ -2,24 +2,18 @@ package se.dzm.electricvehiclechargingstationmanagement.service.impl;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import se.dzm.electricvehiclechargingstationmanagement.entity.QStationEntity;
 import se.dzm.electricvehiclechargingstationmanagement.entity.StationEntity;
-import se.dzm.electricvehiclechargingstationmanagement.enums.DistanceType;
 import se.dzm.electricvehiclechargingstationmanagement.mapping.StationMapper;
-import se.dzm.electricvehiclechargingstationmanagement.model.CompanyModel;
 import se.dzm.electricvehiclechargingstationmanagement.model.StationModel;
 import se.dzm.electricvehiclechargingstationmanagement.repository.StationRepository;
 import se.dzm.electricvehiclechargingstationmanagement.service.StationService;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-import static se.dzm.electricvehiclechargingstationmanagement.util.DistanceUtil.distance;
 import static se.dzm.electricvehiclechargingstationmanagement.util.MapperHelper.option;
 
 @Service
@@ -57,15 +51,7 @@ public class StationServiceImpl extends BaseServiceImpl<StationModel, StationEnt
     }
 
     @Override
-    public List<StationModel> findAllByLocation(Long companyId, double latitude, double longitude) {
-        StationModel filter = new StationModel(){{setCompany(new CompanyModel(){{setId(companyId);}});}};
-        return StreamSupport.stream(stationRepository.findAll(queryBuilder(filter)).spliterator(), false)
-                .map(entity -> {
-                    StationModel model = mapper.toModel(entity);
-                    model.setDistance(distance(latitude, longitude, model.getLatitude(), model.getLongitude(), DistanceType.Kilometers));
-                    return model;
-                })
-                .sorted(Comparator.comparing(StationModel::getDistance))
-                .collect(Collectors.toList());
+    public Page<StationModel> findClosest(Long companyId, double latitude, double longitude, Pageable pageable) {
+        return stationRepository.findAllByLocationAndDistance(companyId,latitude, longitude,10000D, pageable).map(mapper::toModel);
     }
 }
