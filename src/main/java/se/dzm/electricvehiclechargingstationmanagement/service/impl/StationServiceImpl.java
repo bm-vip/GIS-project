@@ -52,6 +52,6 @@ public class StationServiceImpl extends BaseServiceImpl<StationModel, StationEnt
 
     @Override
     public Page<StationModel> findClosest(Long companyId, double latitude, double longitude, Pageable pageable) {
-        return stationRepository.findAllByLocationAndDistance(companyId,latitude, longitude,10000D, pageable).map(mapper::toModel);
+        return stationRepository.findAllByLocationAndDistance(companyId,latitude, longitude, pageable).map(mapper::toModel);
     }
 }

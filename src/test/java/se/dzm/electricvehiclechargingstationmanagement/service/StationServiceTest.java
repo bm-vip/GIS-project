@@ -41,7 +41,7 @@ public class StationServiceTest {
         stationEntities.add(new StationEntity(){{setName("station A5");setCompany(new CompanyEntity(){{setId(1L);}});setLatitude(32.758118);setLongitude(58.623101);}});
         stationEntities.add(new StationEntity(){{setName("station A8");setCompany(new CompanyEntity(){{setId(1L);}});setLatitude(29.014746);setLongitude(53.212981);}});
         stationEntities.add(new StationEntity(){{setName("station A7");setCompany(new CompanyEntity(){{setId(1L);}});setLatitude(26.801396);setLongitude(58.885711);}});
-        when(stationRepository.findAllByLocationAndDistance(1L,35.700568, 51.349122,10000D,PageRequest.of(0,10))).thenReturn(new PageImpl<>(stationEntities));
+        when(stationRepository.findAllByLocationAndDistance(1L,35.700568, 51.349122, PageRequest.of(0,10))).thenReturn(new PageImpl<>(stationEntities));
 
         //test findClosest service
         Page<StationModel> stationModelPage = stationService.findClosest(1L, 35.700568, 51.349122, PageRequest.of(0,10));

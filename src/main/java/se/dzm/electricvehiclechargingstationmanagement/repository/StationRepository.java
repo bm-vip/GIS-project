@@ -14,6 +14,6 @@ public interface StationRepository extends BaseRepository<StationEntity, Long> {
 
     String HAVERSINE_FORMULA = "(6371 * acos(cos(radians(:latitude)) * cos(radians(s.latitude)) *" +
             " cos(radians(s.longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(s.latitude))))";
-    @Query("SELECT s FROM StationEntity s WHERE s.company.id = :companyId and " + HAVERSINE_FORMULA + " < :distanceWithInKM ORDER BY " + HAVERSINE_FORMULA)
-    Page<StationEntity> findAllByLocationAndDistance(Long companyId, double latitude, double longitude, double distanceWithInKM, Pageable pageable);
+    @Query("SELECT s FROM StationEntity s WHERE s.company.id = :companyId ORDER BY " + HAVERSINE_FORMULA)
+    Page<StationEntity> findAllByLocationAndDistance(Long companyId, double latitude, double longitude, Pageable pageable);
 }
