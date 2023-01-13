@@ -1,4 +1,4 @@
-# Electric vehicle charging station management system
+# Haversine Formula – GIS project 
 ## Installation
 You have 3 ways for installation:\
 Before running the application, the following commands must be executed in the terminal from the project root directory:
