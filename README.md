@@ -51,11 +51,10 @@ kubectl scale --replicas=2 deployment/electric-vehicle-charging-station-manageme
 ```
 ## Install ChromeDriver for Selenium automation test
 Download the Latest Version of ChromeDriver from [here](https://getwebdriver.com/chromedriver#stable)
-Then Extract the downloaded file finally update this line in BaseTest.java 
+Then Extract the downloaded file and update this line in BaseTest.java with actual chromedriver file path
 ```
 System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
-``` 
-with actual chromedriver file path
+```
 ## How to run the application
 After finishing installation click on the [Link](http://localhost:2022) to display login form with `admin` userName and `12345` password by `ADMIN_ROLE`.<br/> Also, you can register a new user on login form by `USER_ROLE`.<br/> After login there are 4 web forms to consuming APIs.<br/>In addition, the swagger-UI [Link](http://localhost:2022/swagger-ui.html) exists to check all APIs.
 ## Introduction
