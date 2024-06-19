@@ -20,7 +20,7 @@ public class BaseTest {
 
     @BeforeAll
     public static void beforeAll() {
-        System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver/linux64/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
         driver = new ChromeDriver();
     }
 
