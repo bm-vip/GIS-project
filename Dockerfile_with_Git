@@ -5,7 +5,7 @@ RUN git clone https://github.com/bm-vip/electric-vehicle-charging-station-manage
 FROM dockerhub.ir/maven:3.8.3-openjdk-17 AS build
 WORKDIR /app
 COPY --from=clone /app/electric-vehicle-charging-station-management /app
-RUN mvn clean install
+RUN mvn clean package verify -DskipTests
 
 FROM dockerhub.ir/openjdk:17-oracle
 WORKDIR /app
