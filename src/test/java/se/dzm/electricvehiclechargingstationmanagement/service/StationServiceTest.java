@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import se.dzm.electricvehiclechargingstationmanagement.entity.CompanyEntity;
 import se.dzm.electricvehiclechargingstationmanagement.entity.StationEntity;
+import se.dzm.electricvehiclechargingstationmanagement.model.CompanyModel;
 import se.dzm.electricvehiclechargingstationmanagement.model.StationModel;
 import se.dzm.electricvehiclechargingstationmanagement.repository.StationRepository;
 
@@ -30,21 +31,21 @@ public class StationServiceTest {
     @Test
     public void findClosest_passCompanyId1ThenShouldReturn10Station() {
         //mock db
-        List<StationEntity> stationEntities = new ArrayList<>();
-        stationEntities.add(new StationEntity(){{setName("station A1");setCompany(new CompanyEntity(){{setId(1L);}});setLatitude(35.700568);setLongitude(51.349122);}});
-        stationEntities.add(new StationEntity(){{setName("station A2");setCompany(new CompanyEntity(){{setId(1L);}});setLatitude(35.657532);setLongitude(51.050988);}});
-        stationEntities.add(new StationEntity(){{setName("station A3");setCompany(new CompanyEntity(){{setId(1L);}});setLatitude(35.819692);setLongitude(50.929555);}});
-        stationEntities.add(new StationEntity(){{setName("station A4");setCompany(new CompanyEntity(){{setId(1L);}});setLatitude(35.370555);setLongitude(51.877604);}});
-        stationEntities.add(new StationEntity(){{setName("station A6");setCompany(new CompanyEntity(){{setId(1L);}});setLatitude(32.071811);setLongitude(54.203648);}});
-        stationEntities.add(new StationEntity(){{setName("station A9");setCompany(new CompanyEntity(){{setId(1L);}});setLatitude(31.594328);setLongitude(49.123338);}});
-        stationEntities.add(new StationEntity(){{setName("station A10");setCompany(new CompanyEntity(){{setId(1L);}});setLatitude(38.390648);setLongitude(45.165619);}});
-        stationEntities.add(new StationEntity(){{setName("station A5");setCompany(new CompanyEntity(){{setId(1L);}});setLatitude(32.758118);setLongitude(58.623101);}});
-        stationEntities.add(new StationEntity(){{setName("station A8");setCompany(new CompanyEntity(){{setId(1L);}});setLatitude(29.014746);setLongitude(53.212981);}});
-        stationEntities.add(new StationEntity(){{setName("station A7");setCompany(new CompanyEntity(){{setId(1L);}});setLatitude(26.801396);setLongitude(58.885711);}});
-        when(stationRepository.findAllByLocationAndDistance(1L,35.700568, 51.349122, PageRequest.of(0,10))).thenReturn(new PageImpl<>(stationEntities));
+        List<StationModel> stationModels = new ArrayList<>();
+        stationModels.add(new StationModel().setName("station A1").setLatitude(35.700568).setLongitude(51.349122).setCompany(new CompanyModel(){{setId(1L);}}));
+        stationModels.add(new StationModel().setName("station A2").setLatitude(35.657532).setLongitude(51.050988).setCompany(new CompanyModel(){{setId(1L);}}));
+        stationModels.add(new StationModel().setName("station A3").setLatitude(35.819692).setLongitude(50.929555).setCompany(new CompanyModel(){{setId(1L);}}));
+        stationModels.add(new StationModel().setName("station A4").setLatitude(35.370555).setLongitude(51.877604).setCompany(new CompanyModel(){{setId(1L);}}));
+        stationModels.add(new StationModel().setName("station A6").setLatitude(32.071811).setLongitude(54.203648).setCompany(new CompanyModel(){{setId(1L);}}));
+        stationModels.add(new StationModel().setName("station A9").setLatitude(31.594328).setLongitude(49.123338).setCompany(new CompanyModel(){{setId(1L);}}));
+        stationModels.add(new StationModel().setName("station A10").setLatitude(38.390648).setLongitude(45.165619).setCompany(new CompanyModel(){{setId(1L);}}));
+        stationModels.add(new StationModel().setName("station A5").setLatitude(32.758118).setLongitude(58.623101).setCompany(new CompanyModel(){{setId(1L);}}));
+        stationModels.add(new StationModel().setName("station A8").setLatitude(29.014746).setLongitude(53.212981).setCompany(new CompanyModel(){{setId(1L);}}));
+        stationModels.add(new StationModel().setName("station A7").setLatitude(26.801396).setLongitude(58.885711).setCompany(new CompanyModel(){{setId(1L);}}));
+        when(stationRepository.findAllByLocationAndDistance(1L,35.700568, 51.349122,10D, PageRequest.of(0,10))).thenReturn(new PageImpl<>(stationModels));
 
         //test findClosest service
-        Page<StationModel> stationModelPage = stationService.findClosest(1L, 35.700568, 51.349122, PageRequest.of(0,10));
+        Page<StationModel> stationModelPage = stationService.findClosest(1L, 35.700568, 51.349122,10D, PageRequest.of(0,10));
         assertThat(stationModelPage).isNotNull().isNotEmpty().size().isEqualTo(10);
         assertThat(stationModelPage.getTotalElements()).isEqualTo(10);
         List<String> expected = List.of("station A1","station A2","station A3","station A4","station A6","station A9","station A10","station A5","station A8","station A7");

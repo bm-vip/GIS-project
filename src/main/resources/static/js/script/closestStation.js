@@ -45,7 +45,7 @@ function submitForm(form) {
     $.blockUI(blockUiOptions());
     $.ajax({
         type: "GET",
-        url: ajaxUrl + "/findClosest/{0}/{1}?pageNum={2}&pageSize={3}".format($("#latitude").val(),$("#longitude").val(),0,10),
+        url: ajaxUrl + "/findClosest?latitude={0}&longitude={1}&maxDistance={2}&page={3}&size={4}".format($("#latitude").val(),$("#longitude").val(),$("#distance").val(),0,10),
         dataType: "json",
         contentType: "application/json;charset=utf-8",
         data: { companyId: $("#companySelect2").val() },

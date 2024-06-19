@@ -124,13 +124,16 @@ class StationRestControllerTest {
     @WithMockUser(roles="ADMIN")
     @Test
     void findClosest_passCorrectLatAndLonThenShouldReturnStationModelsOrderByDistance() throws Exception {
-        mockMvc.perform(get("/api/v1/station/findClosest/{latitude}/{longitude}",35.700568,51.349122)
+        mockMvc.perform(get("/api/v1/station/findClosest")
+                        .param("latitude","35.700568")
+                        .param("longitude","51.349122")
+                        .param("maxDistance","1000")
                         .param("companyId","1")
-                        .param("pageNum","0")
-                        .param("pageSize","10"))
+                        .param("page","0")
+                        .param("size","10"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.totalElements").value(10))
-                .andExpect((jsonPath("$.content", Matchers.hasSize(10))))
+                .andExpect(jsonPath("$.totalElements").value(9))
+                .andExpect((jsonPath("$.content", Matchers.hasSize(9))))
                 .andExpect(jsonPath("$.content.[0].name").value("station A1"))
                 .andExpect(jsonPath("$.content.[1].name").value("station A2"))
                 .andExpect(jsonPath("$.content.[2].name").value("station A3"))
@@ -140,14 +143,13 @@ class StationRestControllerTest {
                 .andExpect(jsonPath("$.content.[6].name").value("station A10"))
                 .andExpect(jsonPath("$.content.[7].name").value("station A5"))
                 .andExpect(jsonPath("$.content.[8].name").value("station A8"))
-                .andExpect(jsonPath("$.content.[9].name").value("station A7"))
         ;
     }
 
     @WithMockUser(roles="ADMIN")
     @Test
     void findClosest_passIncorrectLatAndLonThenshouldReturn400BadRequest() throws Exception {
-        mockMvc.perform(get("/api/v1/station/findClosest/{latitude}/{longitude}",-99,188).param("companyId","0"))
+        mockMvc.perform(get("/api/v1/station/findClosest").param("latitude","-99,188").param("companyId","0"))
                 .andExpect(status().isBadRequest())
         ;
     }

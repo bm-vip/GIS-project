@@ -31,15 +31,16 @@ public class StationRestController extends BaseRestControllerImpl<StationModel, 
         this.stationService = service;
     }
 
-    @GetMapping(value = {"/findClosest/{latitude}/{longitude}"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(value = {"/findClosest"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity<Page<StationModel>> findClosest(
-            @PathVariable("latitude") @Min(value = -90) @Max(value = 90) double latitude
-            , @PathVariable("longitude") @Min(value = -180) @Max(value = 180) double longitude
-            , @RequestParam(value = "companyId", required = false) Long companyId
-            , @RequestParam int pageNum
-            , @RequestParam int pageSize
+            @RequestParam("latitude") @Min(value = -90) @Max(value = 90) double latitude,
+            @RequestParam("longitude") @Min(value = -180) @Max(value = 180) double longitude,
+            @RequestParam(value = "companyId", required = false) Long companyId,
+            @RequestParam(value = "distance", required = false, defaultValue = "1000") Double maxDistance,
+            @RequestParam(required = false,defaultValue = "0") int page,
+            @RequestParam(required = false,defaultValue = "10") int size
     ) {
-        return ResponseEntity.ok(stationService.findClosest(companyId, latitude, longitude, PageRequest.of(pageNum, pageSize)));
+        return ResponseEntity.ok(stationService.findClosest(companyId, latitude, longitude, maxDistance, PageRequest.of(page, size)));
     }
 
     @Override

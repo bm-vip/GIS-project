@@ -47,6 +47,11 @@
                                 <th:block
                                         th:replace="fragments/select2 :: select2('3',#{company}, 'company', '/api/v1/company/findAllSelect','{name:params.term}',false)"></th:block>
                             </div>
+                            <div class="col-md-6 form-group">
+                                <label th:text="#{distance}"></label>
+                                <input class="form-control" tabindex="1" type="number" th:placeholder="#{distance}" value="100"
+                                        th:title="#{distance}" id="distance"/>
+                            </div>
                         </div>
                         <div class="ln_solid"></div>
                         <div class="row">
