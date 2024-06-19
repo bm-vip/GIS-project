@@ -49,7 +49,7 @@ Scaling the application to increase the number of replicas to 2 or more:
 ```
 kubectl scale --replicas=2 deployment/electric-vehicle-charging-station-management
 ```
-## How to install ChromeDriver on your operating system for Selenium automation test
+## How to install ChromeDriver on your OS, for Selenium automation test
 Download the Latest Version of ChromeDriver from [here](https://getwebdriver.com/chromedriver#stable)
 Then Extract the downloaded file finally update this line in BaseTest.java 
 ```
