@@ -7,8 +7,6 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import se.dzm.electricvehiclechargingstationmanagement.entity.CompanyEntity;
-import se.dzm.electricvehiclechargingstationmanagement.entity.StationEntity;
 import se.dzm.electricvehiclechargingstationmanagement.model.CompanyModel;
 import se.dzm.electricvehiclechargingstationmanagement.model.StationModel;
 import se.dzm.electricvehiclechargingstationmanagement.repository.StationRepository;
@@ -42,10 +40,10 @@ public class StationServiceTest {
         stationModels.add(new StationModel().setName("station A5").setLatitude(32.758118).setLongitude(58.623101).setCompany(new CompanyModel(){{setId(1L);}}));
         stationModels.add(new StationModel().setName("station A8").setLatitude(29.014746).setLongitude(53.212981).setCompany(new CompanyModel(){{setId(1L);}}));
         stationModels.add(new StationModel().setName("station A7").setLatitude(26.801396).setLongitude(58.885711).setCompany(new CompanyModel(){{setId(1L);}}));
-        when(stationRepository.findAllByLocationAndDistance(1L,35.700568, 51.349122,10D, PageRequest.of(0,10))).thenReturn(new PageImpl<>(stationModels));
+        when(stationRepository.findAllByHaversineFormula(1L,35.700568, 51.349122,10D, PageRequest.of(0,10))).thenReturn(new PageImpl<>(stationModels));
 
         //test findClosest service
-        Page<StationModel> stationModelPage = stationService.findClosest(1L, 35.700568, 51.349122,10D, PageRequest.of(0,10));
+        Page<StationModel> stationModelPage = stationService.findClosestByHaversineFormula(1L, 35.700568, 51.349122,10D, PageRequest.of(0,10));
         assertThat(stationModelPage).isNotNull().isNotEmpty().size().isEqualTo(10);
         assertThat(stationModelPage.getTotalElements()).isEqualTo(10);
         List<String> expected = List.of("station A1","station A2","station A3","station A4","station A6","station A9","station A10","station A5","station A8","station A7");

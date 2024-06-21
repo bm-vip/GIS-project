@@ -2,11 +2,15 @@ package se.dzm.electricvehiclechargingstationmanagement.service.impl;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.PrecisionModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import se.dzm.electricvehiclechargingstationmanagement.config.CoordinateUtil;
 import se.dzm.electricvehiclechargingstationmanagement.entity.QStationEntity;
 import se.dzm.electricvehiclechargingstationmanagement.entity.StationEntity;
 import se.dzm.electricvehiclechargingstationmanagement.mapping.StationMapper;
@@ -51,7 +55,12 @@ public class StationServiceImpl extends BaseServiceImpl<StationModel, StationEnt
     }
 
     @Override
-    public Page<StationModel> findClosest(Long companyId, double latitude, double longitude, double maxDistance, Pageable pageable) {
-        return stationRepository.findAllByLocationAndDistance(companyId,latitude, longitude, maxDistance, pageable);
+    public Page<StationModel> findClosestByHaversineFormula(Long companyId, double latitude, double longitude, double maxDistance, Pageable pageable) {
+        return stationRepository.findAllByHaversineFormula(companyId,latitude, longitude, maxDistance, pageable);
+    }
+    @Override
+    public Page<StationModel> findClosestByGeoPoint(Long companyId, double latitude, double longitude, double maxDistance, Pageable pageable) {
+        var location = CoordinateUtil.fromLatLong(longitude, latitude);
+        return stationRepository.findAllByGeoPoint(companyId,location, maxDistance, pageable);
     }
 }

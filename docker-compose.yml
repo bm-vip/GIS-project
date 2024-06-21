@@ -10,7 +10,7 @@ services:
     environment:
       - DB_URL=jdbc:postgresql://dbpostgresql:5432/evcsm_db
       - DB_USER=postgres
-      - DB_PASS=postgres
+      - DB_PASS=password
     depends_on:
       - dbpostgresql
 #      dbpostgresql:

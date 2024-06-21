@@ -2,6 +2,7 @@ package se.dzm.electricvehiclechargingstationmanagement.entity;
 
 import lombok.Data;
 import org.hibernate.annotations.Where;
+import org.locationtech.jts.geom.Point;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -40,6 +41,9 @@ public class StationEntity extends BaseEntity<Long> implements LogicalDeleted {
     @Min(value = -180)
     @Max(value = 180)
     private Double longitude;
+
+    @Column(columnDefinition = "geometry(Point, 4326)")
+    private Point location;
 
     @ManyToOne
     @JoinColumn(name = "company_id", nullable = false)

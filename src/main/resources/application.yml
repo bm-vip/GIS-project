@@ -25,14 +25,14 @@ spring:
     driver-class-name: org.postgresql.Driver
     url: ${DB_URL:jdbc:postgresql://localhost:5432/evcsm_db}
     username: ${DB_USER:postgres}
-    password: ${DB_PASS:postgres}
+    password: ${DB_PASS:password}
   # JPA properties
   jpa:
     hibernate:
       ddl-auto: none
     show-sql: true
     database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database-platform: org.hibernate.spatial.dialect.postgis.PostgisDialect
     open-in-view: false
     generate-ddl: true
     properties:

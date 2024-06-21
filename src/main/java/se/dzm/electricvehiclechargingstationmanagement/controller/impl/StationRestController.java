@@ -31,16 +31,27 @@ public class StationRestController extends BaseRestControllerImpl<StationModel, 
         this.stationService = service;
     }
 
-    @GetMapping(value = {"/findClosest"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity<Page<StationModel>> findClosest(
-            @RequestParam("latitude") @Min(value = -90) @Max(value = 90) double latitude,
-            @RequestParam("longitude") @Min(value = -180) @Max(value = 180) double longitude,
-            @RequestParam(value = "companyId", required = false) Long companyId,
-            @RequestParam(value = "distance", required = false, defaultValue = "1000") Double maxDistance,
+    @GetMapping(value = {"/findClosest-by-haversine"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity<Page<StationModel>> findClosestByHaversineFormula(
+            @RequestParam @Min(value = -90) @Max(value = 90) double latitude,
+            @RequestParam @Min(value = -180) @Max(value = 180) double longitude,
+            @RequestParam(required = false) Long companyId,
+            @RequestParam(required = false, defaultValue = "100") Double maxDistance,
             @RequestParam(required = false,defaultValue = "0") int page,
             @RequestParam(required = false,defaultValue = "10") int size
     ) {
-        return ResponseEntity.ok(stationService.findClosest(companyId, latitude, longitude, maxDistance, PageRequest.of(page, size)));
+        return ResponseEntity.ok(stationService.findClosestByHaversineFormula(companyId, latitude, longitude, maxDistance, PageRequest.of(page, size)));
+    }
+    @GetMapping(value = {"/findClosest-by-geopoint"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity<Page<StationModel>> findClosestByGeoPoint(
+            @RequestParam @Min(value = -90) @Max(value = 90) double latitude,
+            @RequestParam @Min(value = -180) @Max(value = 180) double longitude,
+            @RequestParam(required = false) Long companyId,
+            @RequestParam(required = false, defaultValue = "100") Double maxDistance,
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "10") int size
+    ) {
+        return ResponseEntity.ok(stationService.findClosestByGeoPoint(companyId, latitude, longitude, maxDistance, PageRequest.of(page, size)));
     }
 
     @Override

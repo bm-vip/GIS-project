@@ -124,7 +124,7 @@ class StationRestControllerTest {
     @WithMockUser(roles="ADMIN")
     @Test
     void findClosest_passCorrectLatAndLonThenShouldReturnStationModelsOrderByDistance() throws Exception {
-        mockMvc.perform(get("/api/v1/station/findClosest")
+        mockMvc.perform(get("/api/v1/station/findClosest-by-haversine")
                         .param("latitude","35.700568")
                         .param("longitude","51.349122")
                         .param("maxDistance","1000")
@@ -149,7 +149,7 @@ class StationRestControllerTest {
     @WithMockUser(roles="ADMIN")
     @Test
     void findClosest_passIncorrectLatAndLonThenshouldReturn400BadRequest() throws Exception {
-        mockMvc.perform(get("/api/v1/station/findClosest").param("latitude","-99,188").param("companyId","0"))
+        mockMvc.perform(get("/api/v1/station/findClosest-by-haversine").param("latitude","-99,188").param("companyId","0"))
                 .andExpect(status().isBadRequest())
         ;
     }

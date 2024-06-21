@@ -14,4 +14,8 @@ public interface StationMapper extends BaseMapper<StationModel, StationEntity> {
             @Mapping(target = "company.parent", ignore = true)
     })
     StationModel toModel(final StationEntity entity);
+
+    @Mapping(target = "location", expression = "java(se.dzm.electricvehiclechargingstationmanagement.config.CoordinateUtil.fromLatLong(model.getLatitude(), model.getLongitude()))")
+    StationEntity toEntity(StationModel model);
+
 }

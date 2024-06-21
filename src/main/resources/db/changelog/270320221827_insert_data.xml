@@ -41,4 +41,12 @@
         <sql dbms="postgresql">select setval('seq_station', max(id)+1) from tbl_station</sql>
         <sql dbms="h2">alter sequence seq_station restart with (select max(id)+1 from tbl_station)</sql>
     </changeSet>
+    <changeSet id="270320221827-4" author="b.mohamadi">
+        <addColumn tableName="tbl_station">
+            <column name="location" type="geometry(Point, 4326)"/>
+        </addColumn>
+        <sql>UPDATE tbl_station
+             SET location = ST_SetSRID(ST_MakePoint(lng, lat), 4326)
+             WHERE lat IS NOT NULL AND location isnull;</sql>
+    </changeSet>
 </databaseChangeLog>
