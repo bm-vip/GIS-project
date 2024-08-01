@@ -1,7 +1,7 @@
 version: '3'
 services:
   app:
-    image: electric-vehicle-charging-station-management-image
+    image: behrooz2022/gis-project
     build:
       context: ./
       dockerfile: Dockerfile

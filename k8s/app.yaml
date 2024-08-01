@@ -3,22 +3,22 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: electric-vehicle-charging-station-management
-  name: electric-vehicle-charging-station-management
+    app: gis-project
+  name: gis-project
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
-      app: electric-vehicle-charging-station-management
+      app: gis-project
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: electric-vehicle-charging-station-management
+        app: gis-project
     spec:
       containers:
-        - image: electric-vehicle-charging-station-management-image
+        - image: behrooz2022/gis-project
           name: electric-vehicle-charging-station-management-image
           resources: {}
           imagePullPolicy: IfNotPresent
@@ -42,16 +42,16 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    app: electric-vehicle-charging-station-management
-  name: electric-vehicle-charging-station-management
+    app: gis-project
+  name: gis-project
 spec:
   ports:
-    - name: 2022-2022
-      port: 2022
+    - name: 80-2022
+      port: 80
       protocol: TCP
       targetPort: 2022
   selector:
-    app: electric-vehicle-charging-station-management
+    app: gis-project
   type: LoadBalancer
 status:
   loadBalancer: {}
