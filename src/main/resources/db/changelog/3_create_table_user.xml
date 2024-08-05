@@ -5,13 +5,13 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd"
         objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
-    <changeSet id="290320222330-1" author="b.mohamadi">
+    <changeSet id="3-1" author="b.mohamadi">
         <createSequence incrementBy="1" sequenceName="seq_role" startValue="1"/>
     </changeSet>
-    <changeSet id="290320222330-2" author="b.mohamadi">
+    <changeSet id="3-2" author="b.mohamadi">
         <createSequence incrementBy="1" sequenceName="seq_user" startValue="1"/>
     </changeSet>
-    <changeSet id="290320222330-3" author="b.mohamadi">
+    <changeSet id="3-3" author="b.mohamadi">
         <createTable tableName="tbl_role">
             <column name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_tbl_role"/>
@@ -25,7 +25,7 @@
             <column name="title" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>
-    <changeSet id="290320222330-4" author="b.mohamadi">
+    <changeSet id="3-4" author="b.mohamadi">
         <createTable tableName="tbl_user">
             <column name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_tbl_user"/>
@@ -45,7 +45,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet id="290320222330-5" author="b.mohamadi">
+    <changeSet id="3-5" author="b.mohamadi">
         <createTable tableName="tbl_user_role">
             <column name="role_id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_tbl_user_role"/>
@@ -55,21 +55,21 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet id="290320222330-6" author="b.mohamadi">
+    <changeSet id="3-6" author="b.mohamadi">
         <addUniqueConstraint columnNames="role" constraintName="uc_tbl_role_role" tableName="tbl_role"/>
     </changeSet>
-    <changeSet id="290320222330-7" author="b.mohamadi">
+    <changeSet id="3-7" author="b.mohamadi">
         <addUniqueConstraint columnNames="email" constraintName="uc_tbl_user_email" tableName="tbl_user"/>
     </changeSet>
-    <changeSet id="290320222330-8" author="b.mohamadi">
+    <changeSet id="3-8" author="b.mohamadi">
         <addUniqueConstraint columnNames="user_name" constraintName="uc_tbl_user_user_name" tableName="tbl_user"/>
     </changeSet>
-    <changeSet id="290320222330-9" author="b.mohamadi">
+    <changeSet id="3-9" author="b.mohamadi">
         <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="tbl_user_role"
                                  constraintName="fk_tbluserol_on_role_entity" referencedColumnNames="id"
                                  referencedTableName="tbl_role"/>
     </changeSet>
-    <changeSet id="290320222330-10" author="b.mohamadi">
+    <changeSet id="3-10" author="b.mohamadi">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="tbl_user_role"
                                  constraintName="fk_tbluserol_on_user_tbl" referencedColumnNames="id"
                                  referencedTableName="tbl_user"/>

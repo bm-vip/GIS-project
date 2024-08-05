@@ -1,16 +1,6 @@
-# Use the official PostgreSQL image from the Docker Hub
-FROM postgres:16
+FROM postgres
 
-# Install PostGIS
-RUN apt-get update && \
-    apt-get install -y postgis postgresql-16-postgis-3
-
-# Add any custom configurations or scripts if needed
-# COPY custom-config.conf /etc/postgresql/postgresql.conf
-
-# Expose the default PostgreSQL port
-EXPOSE 5432
-
-# Set the default command to run PostgreSQL
-CMD ["postgres"]
+RUN apt-get update
+RUN apt-get upgrade -y
+RUN apt-get install postgis -y
 

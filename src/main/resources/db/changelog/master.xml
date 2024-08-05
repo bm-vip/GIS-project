@@ -16,9 +16,9 @@
     <property name="idType" value="bigint" dbms="mysql, oracle, mssql, h2"/>
 
 
-    <include file="db/changelog/250320222030_create_table.xml" relativeToChangelogFile="false"/>
-    <include file="db/changelog/270320221827_insert_data.xml" relativeToChangelogFile="false"/>
-    <include file="db/changelog/290320222330_create_table.xml" relativeToChangelogFile="false"/>
-    <include file="db/changelog/300320220244_insert_data.xml" relativeToChangelogFile="false"/>
+    <include file="/db/changelog/1_create_table_company.xml" relativeToChangelogFile="false"/>
+    <include file="/db/changelog/2_insert_data_company.xml" relativeToChangelogFile="false"/>
+    <include file="/db/changelog/3_create_table_user.xml" relativeToChangelogFile="false"/>
+    <include file="/db/changelog/4_insert_data_user.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>

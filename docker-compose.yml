@@ -1,4 +1,5 @@
-version: '3'
+version: '3.8'
+
 services:
   app:
     image: behrooz2022/gis-project
@@ -13,15 +14,12 @@ services:
       - DB_PASS=password
     depends_on:
       - dbpostgresql
-#      dbpostgresql:
-#        condition: service_healthy
   dbpostgresql:
     build:
       context: .
       dockerfile: PostgresDockerfile
-    image: postgres
-    container_name: postgresql-container
-    restart: unless-stopped
+    image: postgres-gis
+    container_name: postgres-gis-container
     ports:
       - 5432:5432
     environment:
@@ -29,4 +27,4 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: evcsm_db
     volumes:
-      - ./db/schema.sql:/docker-entrypoint-initdb.d
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/postgres-gis-container.sh
