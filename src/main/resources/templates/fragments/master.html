@@ -8,7 +8,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name='author' content='behrooz mohamadi, behrooz.mohamadi@gmail.com'>
     <title th:text="#{siteName} + ' - ' + ${pageTitle}"></title>
 
     <link rel="shortcut icon" type="image/png" th:href="@{/images/favicon.png}"/>
@@ -17,7 +16,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/lib/font-awesome.min.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/lib/nprogress.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/skins/blue.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/lib/custom.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="'/css/lib/custom.' + #{locale} + '.min.css'"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/lib/bootstrap.dataTables-rtl.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/lib/bootstrap.datatable.responsive-rtl.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/lib/bootstrap-tagsinput.css}"/>
@@ -57,23 +56,23 @@
                     <div class="menu_section">
 
                         <ul class="nav side-menu">
-                            <li sec:authorize="hasAnyRole('ADMIN','SUPER_WISER')"><a><i class="fa fa-home"></i>
+                            <li sec:authorize="hasAnyRole('SUPER_WISER','ADMIN')"><a><i class="fa fa-home"></i>
                                 <th:block th:text="#{home}"></th:block>
                                 <span class="fa fa-chevrnon-down"></span></a>
                                 <ul class="nav child_menu">
                                     <li><a th:href="@{/dashboard}" th:text="#{dashboard}"></a></li>
                                 </ul>
                             </li>
-                            <li><a><i class="fa fa-edit"></i>
+                            <li sec:authorize="hasAnyRole('SUPER_WISER','ADMIN')"><a><i class="fa fa-edit"></i>
                                 <th:block th:text="#{baseInfo}"></th:block>
                                 <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
                                     <li><a th:href="@{/company}" th:text="#{company}"></a></li>
                                     <li><a th:href="@{/station}" th:text="#{station}"></a></li>
-                                    <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/userManagement}"
-                                                                            th:text="#{userManagement}"></a></li>
+                                    <li><a th:href="@{/userManagement}" th:text="#{userManagement}"></a></li>
                                 </ul>
                             </li>
+
                             <li class="sub_menu"><a th:href="@{/closestStation}"><i class="fa fa-globe"></i>
                                 <th:block th:text="#{closestStation}"></th:block>
                             </a></li>
@@ -119,8 +118,6 @@
                                        th:text="#{persian} "></a></li>
                                 <li><a href="javascript:changeUrlParameterAndReload('lang','en')"
                                        th:text="#{english} "></a></li>
-                                <li><a href="javascript:changeUrlParameterAndReload('lang','ru')"
-                                       th:text="#{russia} "></a></li>
                                 <li><a th:href="@{/logout}"><i class="fa fa-sign-out pull-right"></i>
                                     <th:block th:text="#{exit}"></th:block>
                                 </a></li>
@@ -138,7 +135,7 @@
                                         <span class="image"><img th:src="@{/images/find_user.png}"
                                                                  alt="Profile Image"/></span>
                                         <span>
-                          <span>Behrooz Mohamadi</span>
+                          <span>System Admin</span>
                           <span class="time">3 minute ago</span>
                         </span>
                                         <span class="message">
@@ -151,7 +148,7 @@
                                         <span class="image"><img th:src="@{/images/find_user.png}"
                                                                  alt="Profile Image"/></span>
                                         <span>
-                           <span>Behrooz Mohamadi</span>
+                           <span>System Admin</span>
                           <span class="time">3 minute ago</span>
                         </span>
                                         <span class="message">
@@ -164,7 +161,7 @@
                                         <span class="image"><img th:src="@{/images/find_user.png}"
                                                                  alt="Profile Image"/></span>
                                         <span>
-                           <span>Behrooz Mohamadi</span>
+                           <span>System Admin</span>
                           <span class="time">3 minute ago</span>
                         </span>
                                         <span class="message">
@@ -177,7 +174,7 @@
                                         <span class="image"><img th:src="@{/images/find_user.png}"
                                                                  alt="Profile Image"/></span>
                                         <span>
-                           <span>Behrooz Mohamadi</span>
+                           <span>System Admin</span>
                           <span class="time">3 minute ago</span>>
                         </span>
                                         <span class="message">
@@ -230,7 +227,7 @@
         <footer class="hidden-print">
             <div class="pull-left">
                 <th:block th:text="#{developAndDesignBy}"></th:block>
-                <a href="http://www.sepandariranian.com" th:text="#{siteName}"></a>
+                <a th:href="#{developerSiteAddress}" th:text="#{developerSiteName}"></a>
             </div>
             <div class="clearfix"></div>
         </footer>

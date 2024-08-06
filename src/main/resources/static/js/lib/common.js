@@ -147,9 +147,9 @@ function show_error(mes) {
 
 }
 
-function get(expr, defaultValue) {
+function get(lambdaExpr, defaultValue) {// () => supplier expr
     try {
-        return expr();
+        return lambdaExpr();
     } catch (e) {
         return isNullOrEmpty(defaultValue) ? '' : defaultValue;
     }
@@ -349,14 +349,27 @@ function initAjaxTable(selector, columns, url, filterFunction) {
         'type': 'GET',
         'url': url,
         'data': function (data) {
+            let requestParam = {
+                "page": data.start / data.length,
+                "size": data.length,
+                "sort": data.columns[data.order[0].column].data + ',' + data.order[0].dir
+            };
             let fn = window[filterFunction];
             if (typeof fn === 'function') {
-                data.model = JSON.stringify(fn());
+                return jsonToUrlSearchParams(fn()) + '&' + jsonToUrlSearchParams(requestParam);
             }
+            return requestParam;
         },
+        // "dataSrc": function(json) {
+        //     json.recordsTotal = json.totalElements;
+        //     json.recordsFiltered = json.totalElements;
+        //     return json.content;
+        // },
         'datatype': 'json',
         'error': function (xhr) {
-            show_error(xhr.responseText);
+            if(isNullOrEmpty(get(()=>xhr.responseJSON)))
+                show_error('ajax answer GET returned error: ' + xhr.responseText);
+            else show_error(xhr.responseJSON.error + ' (' + xhr.responseJSON.status + ') <br>' + xhr.responseJSON.message);
         }
     };
     return $(selector).DataTable(opts);
@@ -418,3 +431,31 @@ function setSwitchery(selector, checked) {
         $(element).trigger("click")
     }
 }
+
+function flattenObject(obj, prefix = '') {
+    const result = {};
+    for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            const value = obj[key];
+            const newKey = prefix ? `${prefix}.${key}` : key;
+            if (value && typeof value === 'object' && !Array.isArray(value)) {
+                Object.assign(result, flattenObject(value, newKey));
+            } else if (!isNullOrEmpty(value)) {
+                // Only include non-null values
+                result[newKey] = value;
+            }
+        }
+    }
+    return result;
+}
+function jsonToUrlSearchParams(json) {
+    const flattened = flattenObject(json);
+    const params = new URLSearchParams();
+    for (const key in flattened) {
+        if (flattened.hasOwnProperty(key)) {
+            params.append(key, flattened[key]);
+        }
+    }
+    return params.toString();
+}
+

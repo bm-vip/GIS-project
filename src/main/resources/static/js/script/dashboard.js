@@ -19,20 +19,20 @@
     //     }
     // })
 
-    $.getJSON("/api/v1/company/countAll", {model: JSON.stringify({})}, function (data) {
+    $.getJSON("/api/v1/company/countAll", jsonToUrlSearchParams({}), function (data) {
         $("#totalCompanies").text(data);
     });
 
-    $.getJSON("/api/v1/station/countAll", {model: JSON.stringify({})}, function (data) {
+    $.getJSON("/api/v1/station/countAll", jsonToUrlSearchParams({}), function (data) {
         $("#totalStations").text(data);
     });
 
-    $.getJSON("/api/v1/user/countAll", {model: JSON.stringify({})}, function (data) {
+    $.getJSON("/api/v1/user/countAll", jsonToUrlSearchParams({}), function (data) {
         $("#totalUsers").text(data);
     });
 
 
-    $.getJSON("api/v1/role/countAll", {model: JSON.stringify({})}, function (data) {
+    $.getJSON("api/v1/role/countAll", {filter: JSON.stringify({})}, function (data) {
         $("#totalRoles").text(data);
     });
 });

@@ -1,53 +1,57 @@
 package se.dzm.electricvehiclechargingstationmanagement.controller;
 
+import se.dzm.electricvehiclechargingstationmanagement.model.PageModel;
+import se.dzm.electricvehiclechargingstationmanagement.model.Select2Model;
+import se.dzm.electricvehiclechargingstationmanagement.validation.Save;
+import se.dzm.electricvehiclechargingstationmanagement.validation.Update;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import se.dzm.electricvehiclechargingstationmanagement.model.PageModel;
-import se.dzm.electricvehiclechargingstationmanagement.model.Select2Model;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.io.Serializable;
-import java.util.Optional;
 
-/**
- * @author Behrooz Mohamadi
- * @email behroooz.mohamadi@gmail.com
- * @date 3/27/2018 11:42 AM
- */
-public interface BaseRestController<M, ID extends Serializable> {
+@Validated
+public interface BaseRestController<F, M, ID extends Serializable> {
 
-    @GetMapping(value = {"/findById/{id}"})
+    @GetMapping(value = {"/{id}"})
+    @Operation(summary = "${api.baseRest.findById}", description = "${api.baseRest.findById.desc}")
     ResponseEntity<M> findById(@PathVariable("id") ID id);
 
-    @GetMapping(value = {"/findAll"})
-    ResponseEntity<Page<M>> findAll(@RequestParam(value = "model", required = false) Optional<String> json
-            , @PageableDefault Pageable pageable);
+    @GetMapping
+    @Operation(summary = "${api.baseRest.findAll}", description = "${api.baseRest.findAll.desc}")
+    ResponseEntity<Page<M>> findAll(F filter, @PageableDefault Pageable pageable);
 
     @GetMapping(value = {"/findAllTable"})
-    @ResponseBody
-    PageModel findAllTable(@RequestParam(value = "model",required = false) Optional<String> json
-                         , @RequestParam int start
-                         , @RequestParam int length
-                         , @RequestParam("order[0][dir]") String dir
-                         , @RequestParam("order[0][column]") int columnIndex
-                         , HttpServletRequest request);
+    @Operation(summary = "${api.baseRest.findAllTable}", description = "${api.baseRest.findAll.desc}")
+    ResponseEntity<PageModel> findAllTable(F filter, @PageableDefault Pageable pageable);
 
     @GetMapping(value = {"/findAllSelect"})
-    @ResponseBody
-    Page<Select2Model> findAllSelect(@RequestParam(value = "model",required = false) Optional<String> json,
-                          @RequestParam int page);
+    @Operation(summary = "${api.baseRest.findAllSelect}", description = "${api.baseRest.findAll.desc}")
+    Page<Select2Model> findAllSelect(F filter, @RequestParam int page);
 
     @GetMapping(value = {"/countAll"})
-    ResponseEntity<Long> countAll(@RequestParam(value = "model", required = false) Optional<String> json);
+    @Operation(summary = "${api.baseRest.countAll}", description = "${api.baseRest.countAll.desc}")
+    ResponseEntity<Long> countAll(F filter);
 
-    @DeleteMapping(value = {"/deleteById/{id}"})
+    @GetMapping(value = {"/exists"})
+    @Operation(summary = "${api.baseRest.exists}", description = "${api.baseRest.exists.desc}")
+    ResponseEntity<Boolean> exists(F filter);
+
+    @DeleteMapping(value = {"/{id}"})
+    @Operation(summary = "${api.baseRest.deleteById}", description = "${api.baseRest.deleteById.desc}")
     ResponseEntity<Void> deleteById(@PathVariable("id") ID id);
 
-    @PostMapping(value = {"/save"})
+    @PostMapping
     @ResponseBody
-    ResponseEntity<M> save(@Valid @RequestBody M model);
+    @Operation(summary = "${api.baseRest.save}", description = "${api.baseRest.save.desc}")
+    ResponseEntity<M> create(@Validated(Save.class) @RequestBody M model);
+
+    @PatchMapping
+    @ResponseBody
+    @Operation(summary = "${api.baseRest.update}", description = "${api.baseRest.update.desc}")
+    ResponseEntity<M> update(@Validated(Update.class) @RequestBody M model);
 }

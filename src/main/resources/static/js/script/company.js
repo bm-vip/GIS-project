@@ -9,9 +9,9 @@ messages = {
 };
 function loadEntityByInput() {
     let entity = {
-        id: $("#hdf_id").val(),
+        id: isNullOrEmpty($("#hdf_id").val()) ? null : $("#hdf_id").val(),
         name: $("#name").val(),
-        parent: {id: $("#parentSelect2").val()}
+        parentId: $("#parentSelect2").val()
     };
     return entity;
 }

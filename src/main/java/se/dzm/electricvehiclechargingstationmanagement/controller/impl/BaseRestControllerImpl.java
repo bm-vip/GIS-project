@@ -1,87 +1,100 @@
 package se.dzm.electricvehiclechargingstationmanagement.controller.impl;
 
 
+import se.dzm.electricvehiclechargingstationmanagement.controller.BaseRestController;
+import se.dzm.electricvehiclechargingstationmanagement.exception.BadRequestException;
+import se.dzm.electricvehiclechargingstationmanagement.model.BaseModel;
+import se.dzm.electricvehiclechargingstationmanagement.model.PageModel;
+import se.dzm.electricvehiclechargingstationmanagement.model.Select2Model;
+import se.dzm.electricvehiclechargingstationmanagement.service.BaseService;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import se.dzm.electricvehiclechargingstationmanagement.controller.BaseRestController;
-import se.dzm.electricvehiclechargingstationmanagement.model.BaseModel;
-import se.dzm.electricvehiclechargingstationmanagement.model.PageModel;
-import se.dzm.electricvehiclechargingstationmanagement.model.Select2Model;
-import se.dzm.electricvehiclechargingstationmanagement.service.BaseService;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
-import java.util.Optional;
 
-/**
- * @author Behrooz Mohamadi
- * @email behroooz.mohamadi@gmail.com
- * @date 3/27/2018 11:42 AM
- */
-public abstract class BaseRestControllerImpl<M extends BaseModel<ID>, ID extends Serializable> implements BaseRestController<M, ID> {
-    protected BaseService<M, ID> service;
-    protected Class<M> clazz;
+@Slf4j
+@PropertySource("classpath:i18n/messages.properties")
+public abstract class BaseRestControllerImpl<F,M extends BaseModel<ID>, ID extends Serializable> implements BaseRestController<F, M, ID> {
+    protected BaseService<F, M, ID> service;
+    protected Class<F> clazz;
     protected ObjectMapper objectMapper;
 
-    public BaseRestControllerImpl(BaseService<M, ID> service, Class<M> clazz) {
+    public BaseRestControllerImpl(BaseService<F, M, ID> service, Class<F> clazz) {
         this.clazz = clazz;
         this.service = service;
         this.objectMapper = new ObjectMapper();
+        this.objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
     @Override
     public ResponseEntity<M> findById(ID id) {
+        log.debug("call BaseRestImpl.findById {}, for class {}", id, clazz.getName());
         return ResponseEntity.ok(service.findById(id));
     }
 
     @SneakyThrows
     @Override
-    public ResponseEntity<Page<M>> findAll(Optional<String> json, Pageable pageable) {
-        M model = objectMapper.readValue(json.orElse("{}"), clazz);
-        return ResponseEntity.ok(service.findAll(model, pageable));
+    public ResponseEntity<Page<M>> findAll(F filter, Pageable pageable) {
+        log.debug("call BaseRestImpl.findAll {}, for class {}", filter, clazz.getName());
+        return ResponseEntity.ok(service.findAll(filter, pageable));
     }
 
     @SneakyThrows
     @Override
-    public PageModel findAllTable(Optional<String> json, int start, int length, String dir, int columnIndex, HttpServletRequest request) {
-        M model = objectMapper.readValue(json.orElse("{}"), clazz);
-        String propertyName = request.getParameter("columns[" + columnIndex + "][data]");
-        Sort.Direction direction = dir.equals("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
-        Pageable pageable = PageRequest.of(start / length, length, direction, propertyName);
-        return service.findAllTable(model, pageable);
+    public ResponseEntity<PageModel> findAllTable(F filter, Pageable pageable) {
+        log.debug("call BaseRestImpl.findAllTable {}, for class {}", filter, clazz.getName());
+        return ResponseEntity.ok(service.findAllTable(filter, pageable));
     }
 
     @SneakyThrows
     @Override
-    public Page<Select2Model> findAllSelect(Optional<String> json, int page) {
-        M model = objectMapper.readValue(json.orElse("{}"), clazz);
-
-        Pageable pageable = PageRequest.of(page, 10);
-        return service.findAllSelect(model, pageable);
+    public Page<Select2Model> findAllSelect(F filter, int page) {
+        Pageable pageable = PageRequest.of(page, 10, Sort.Direction.DESC, "id");
+        return service.findAllSelect(filter, pageable);
     }
 
     @SneakyThrows
     @Override
-    public ResponseEntity<Long> countAll(Optional<String> json) {
-        M model = objectMapper.readValue(json.orElse("{}"), clazz);
-        return ResponseEntity.ok(service.countAll(model));
+    public ResponseEntity<Long> countAll(F filter) {
+        log.debug("call BaseRestImpl.countAll {}, for class {}", filter, clazz.getName());
+        return ResponseEntity.ok(service.countAll(filter));
+    }
+
+    @SneakyThrows
+    @Override
+    public ResponseEntity<Boolean> exists(F filter) {
+        log.debug("call BaseRestImpl.exists {}, for class {}", filter, clazz.getName());
+        return ResponseEntity.ok(service.exists(filter));
     }
 
     @Override
     public ResponseEntity<Void> deleteById(ID id) {
+        log.debug("call BaseRestImpl.deleteById {}, for class {}", id, clazz.getName());
         service.deleteById(id);
         return ResponseEntity.noContent().build();
 
     }
 
     @Override
-    public ResponseEntity<M> save(M model) {
-        return ResponseEntity.ok(service.save(model));
+    public ResponseEntity<M> create(M model) {
+        log.debug("call BaseRestImpl.save for {}", model);
+        if (model.getId() != null) {
+            throw new BadRequestException("The id must not be provided when creating a new record");
+        }
+        return ResponseEntity.ok(service.create(model));
     }
 
+    @Override
+    public ResponseEntity<M> update(M model) {
+        log.debug("call BaseRestImpl.update for {}", model);
+        return ResponseEntity.ok(service.update(model));
+    }
 }

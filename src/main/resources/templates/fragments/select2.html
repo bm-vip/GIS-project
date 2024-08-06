@@ -3,8 +3,7 @@
 
 <th:block th:fragment="select2(tabindex,title,id,url,filter,multiple)">
     <div th:id="${id}" class="input-group">
-        <select class="form-control" th:multiple="${multiple}" th:id="${id} + 'Select2'" th:name="${id} + 'Select2'" th:tabindex="${tabindex}"
-                th:title="${title}"></select>
+        <select class="form-control" th:multiple="${multiple}" th:id="${id} + 'Select2'" th:name="${id} + 'Select2'" th:tabindex="${tabindex}"></select>
         <span class="input-group-addon" style="cursor:pointer;"><i class="fa fa-search"></i></span>
     </div>
     <script type="text/javascript">
@@ -24,10 +23,8 @@
                 delay: 250,
                 data: function (params) {
                     $("#[[${id}]] i").removeClass('fa-search').addClass('fa-refresh fa-spin');
-                    return {
-                        model: JSON.stringify([[${filter}]]),
-                        page: params.pageNumber || 0
-                    }
+                    let page = params.pageNumber || 0;
+                    return `page=${page}&` + jsonToUrlSearchParams([[${filter}]]);
                 },
                 processResults: function (result, params) {
                     $("#[[${id}]] i").removeClass('fa-refresh fa-spin').addClass('fa-search');

@@ -8,12 +8,14 @@ import se.dzm.electricvehiclechargingstationmanagement.model.Select2Model;
 
 import java.io.Serializable;
 
-public interface BaseService<M extends BaseModel<ID>, ID extends Serializable> {
-    Page<M> findAll(M filter, Pageable pageable);
-    PageModel findAllTable(M filter, Pageable pageable);
-    Page<Select2Model> findAllSelect(M model, Pageable pageable);
-    Long countAll(M filter);
+public interface BaseService<F, M extends BaseModel<ID>, ID extends Serializable> {
+    Page<M> findAll(F filter, Pageable pageable);
+    PageModel findAllTable(F filter, Pageable pageable);
+    Page<Select2Model> findAllSelect(F filter, Pageable pageable);
+    Long countAll(F filter);
+    boolean exists(F filter);
     M findById(ID id);
-    M save(M model);
+    M create(M model);
+    M update(M model);
     void deleteById(ID id);
 }

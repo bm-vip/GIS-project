@@ -6,17 +6,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.NOT_FOUND)
-public class NotFoundException extends BaseException {
-    private static final Logger log = LoggerFactory.getLogger(NotFoundException.class);
-    public NotFoundException() {
-        super("not found!", HttpStatus.NOT_FOUND);
+@ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+public class NotAcceptableException extends BaseException {
+    private static final Logger log = LoggerFactory.getLogger(NotAcceptableException.class);
+    public NotAcceptableException() {
+        super("not accepted!",HttpStatus.NOT_ACCEPTABLE);
         log.error(
                 String.valueOf(this)
         );
     }
-    public NotFoundException(String msg) {
-        super(String.format("%s",msg), HttpStatus.NOT_FOUND);
+    public NotAcceptableException(String msg) {
+        super(String.format("%s",msg), HttpStatus.NOT_ACCEPTABLE);
         log.error(
                 String.valueOf(this)
         );

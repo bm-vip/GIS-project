@@ -60,6 +60,6 @@ public class UserServiceTest {
         //test register service
         UserModel userModel = new UserModel(){{setUserName("test");}};
         BadRequestException exception = assertThrows(BadRequestException.class, () -> userService.register(userModel));
-        assertThat(exception.getReason()).isEqualTo("userName is already taken!");
+        assertThat(exception.getMessage()).isEqualTo("userName is already taken!");
     }
 }

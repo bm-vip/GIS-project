@@ -1,6 +1,5 @@
 package se.dzm.electricvehiclechargingstationmanagement.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -15,6 +14,5 @@ public class BaseModel<ID extends Serializable> implements Serializable {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     protected Date createdDate;;
     protected int version;
-    @JsonIgnore
     private String selectTitle;
 }

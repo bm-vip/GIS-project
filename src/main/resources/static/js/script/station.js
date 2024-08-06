@@ -26,8 +26,9 @@ messages = {
 
 function loadEntityByInput() {
     let model = {
-        id: $("#hdf_id").val(),
-        company: {id: $("#companySelect2").val()},
+        id: isNullOrEmpty($("#hdf_id").val()) ? null : $("#hdf_id").val(),
+        company: isNullOrEmpty($("#companySelect2").val())? null : {id: $("#companySelect2").val()},
+        companyId: $("#companySelect2").val(),
         name: $("#name").val(),
         latitude: $("#latitude").val(),
         longitude: $("#longitude").val(),

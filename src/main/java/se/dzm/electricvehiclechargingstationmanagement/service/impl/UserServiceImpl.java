@@ -4,12 +4,14 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import se.dzm.electricvehiclechargingstationmanagement.entity.QUserEntity;
 import se.dzm.electricvehiclechargingstationmanagement.entity.UserEntity;
 import se.dzm.electricvehiclechargingstationmanagement.enums.RoleType;
 import se.dzm.electricvehiclechargingstationmanagement.exception.BadRequestException;
 import se.dzm.electricvehiclechargingstationmanagement.exception.NotFoundException;
+import se.dzm.electricvehiclechargingstationmanagement.filter.UserFilter;
 import se.dzm.electricvehiclechargingstationmanagement.mapping.UserMapper;
 import se.dzm.electricvehiclechargingstationmanagement.model.RoleModel;
 import se.dzm.electricvehiclechargingstationmanagement.model.UserModel;
@@ -19,14 +21,11 @@ import se.dzm.electricvehiclechargingstationmanagement.service.UserService;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Optional;
-
-import static se.dzm.electricvehiclechargingstationmanagement.util.MapperHelper.option;
 
 
 @Service
-public class UserServiceImpl extends BaseServiceImpl<UserModel, UserEntity, Long> implements UserService {
+public class UserServiceImpl extends BaseServiceImpl<UserFilter,UserModel, UserEntity, Long> implements UserService {
 
     private final UserRepository userRepository;
     private final RoleService roleService;
@@ -59,30 +58,39 @@ public class UserServiceImpl extends BaseServiceImpl<UserModel, UserEntity, Long
     }
 
     @Override
-    public UserModel save(UserModel model) {
+    @Transactional
+    public UserModel update(UserModel model) {
         if (StringUtils.hasLength(model.getPassword()))
             model.setPassword(bCryptPasswordEncoder.encode(model.getPassword()));
-        if (Objects.nonNull(model.getId())) {
-            UserEntity entity = repository.findById(model.getId()).orElseThrow(() -> new NotFoundException("id: " + model.getId()));
-            return mapper.toModel(repository.save(mapper.updateEntity(model, entity)));
-        }
-        return mapper.toModel(repository.save(mapper.toEntity(model)));
+
+        UserEntity entity = repository.findById(model.getId()).orElseThrow(() -> new NotFoundException("id: " + model.getId()));
+        return mapper.toModel(repository.save(mapper.updateEntity(model, entity)));
     }
 
     @Override
-    public Predicate queryBuilder(UserModel filter) {
+    @Transactional
+    public UserModel create(UserModel model) {
+        var entity = mapper.toEntity(model);
+        if (StringUtils.hasLength(model.getPassword()))
+            entity.setPassword(bCryptPasswordEncoder.encode(model.getPassword()));
+        return mapper.toModel(repository.save(entity));
+    }
+
+    @Override
+    public Predicate queryBuilder(UserFilter filter) {
         BooleanBuilder builder = new BooleanBuilder();
-        QUserEntity user = QUserEntity.userEntity;
+        QUserEntity path = QUserEntity.userEntity;
 
-        option(() -> filter.getId()).ifPresent(id -> builder.and(user.id.eq(id)));
-        option(() -> filter.getActive()).ifPresent(active -> builder.and(user.active.eq(active)));
-
-        if (StringUtils.hasLength(filter.getUserName()))
-            builder.and(user.userName.eq(filter.getUserName()));
-        if (StringUtils.hasLength(filter.getFirstName()))
-            builder.and(user.firstName.contains(filter.getFirstName()));
-        if (StringUtils.hasLength(filter.getLastName()))
-            builder.and(user.lastName.contains(filter.getLastName()));
+        if(!RoleType.hasRole(RoleType.ADMIN)) {
+            builder.and(path.roles.any().role.ne(RoleType.ADMIN));
+        }
+        filter.getId().ifPresent(v -> builder.and(path.id.eq(v)));
+        filter.getTitle().ifPresent(v -> builder.and(path.firstName.toLowerCase().contains(v.toLowerCase())).or(path.lastName.toLowerCase().contains(v.toLowerCase())));
+        filter.getActive().ifPresent(v -> builder.and(path.active.eq(v)));
+        filter.getUserName().ifPresent(v -> builder.and(path.userName.eq(v)));
+        filter.getEmail().ifPresent(v -> builder.and(path.email.toLowerCase().eq(v.toLowerCase())));
+        filter.getFirstName().ifPresent(v -> builder.and(path.firstName.toLowerCase().contains(v.toLowerCase())));
+        filter.getLastName().ifPresent(v -> builder.and(path.lastName.toLowerCase().contains(v.toLowerCase())));
 
         return builder;
     }

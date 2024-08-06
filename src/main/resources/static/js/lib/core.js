@@ -37,7 +37,7 @@ window.onload = function () {
     $(".table:not(#myModal .table)").on("click", ".fa-pencil", function () {
         let fn = window["loadInputByEntity"];
         if (typeof fn === 'function') {
-            $.getJSON(ajaxUrl + "/findById/" + $(this).attr("id"), function (entity) {
+            $.getJSON(ajaxUrl + "/" + $(this).attr("id"), function (entity) {
                 if (entity.error == null) {
                     if (entity.status == 404) {
                         show_warning(resources.nothingFound);
@@ -56,7 +56,7 @@ window.onload = function () {
         if (confirm(resources.areYouSure)) {
             $.ajax({
                 type: "DELETE",
-                url: ajaxUrl + "/deleteById/" + $(this).attr("id"),
+                url: ajaxUrl + "/" + $(this).attr("id"),
                 dataType: "json",
                 contentType: "application/json",
                 success: function (data) {
@@ -68,7 +68,9 @@ window.onload = function () {
                     }
                 },
                 error: function (header, status, error) {
-                    show_error('ajax answer post returned error: ' + header + ' ' + status + ' ' + error);
+                    if(isNullOrEmpty(get(()=>header.responseJSON)))
+                        show_error('ajax answer post returned error: ' + header.responseText);
+                    else show_error(header.responseJSON.error + ' (' + header.responseJSON.status + ') <br>' + header.responseJSON.message);
                 }
             });
         }
@@ -94,8 +96,8 @@ function submitFormData(formData) {
     formData.append('version', version);
     $.blockUI(blockUiOptions());
     $.ajax({
-        type: "POST",
-        url: ajaxUrl + "/save",
+        type: isNullOrEmpty(formData.id) ? "POST" : "PATCH",
+        url: ajaxUrl,
         processData: false,
         contentType: false,
         data: formData,
@@ -115,7 +117,9 @@ function submitFormData(formData) {
             }
         },
         error: function (header, status, error) {
-            show_error('ajax answer post returned error: ' + header + ' ' + status + ' ' + error);
+            if(isNullOrEmpty(get(()=>header.responseJSON)))
+                show_error('ajax answer post returned error: ' + header.responseText);
+            else show_error(header.responseJSON.error + ' (' + header.responseJSON.status + ') <br>' + header.responseJSON.message);
         }
     });
 }
@@ -124,8 +128,8 @@ function submitEntity(entity) {
     entity.version = version;
     $.blockUI(blockUiOptions());
     $.ajax({
-        type: "POST",
-        url: ajaxUrl + "/save",
+        type: isNullOrEmpty(entity.id) ? "POST" : "PATCH",
+        url: ajaxUrl,
         dataType: "json",
         contentType: "application/json;charset=utf-8",
         data: JSON.stringify(entity),
@@ -144,7 +148,9 @@ function submitEntity(entity) {
             }
         },
         error: function (header, status, error) {
-            show_error('ajax answer post returned error: ' + header + ' ' + status + ' ' + error);
+            if(isNullOrEmpty(get(()=>header.responseJSON)))
+                show_error('ajax answer post returned error: ' + header.responseText);
+            else show_error(header.responseJSON.error + ' (' + header.responseJSON.status + ') <br>' + header.responseJSON.message);
         }
     });
 }

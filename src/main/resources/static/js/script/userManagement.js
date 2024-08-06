@@ -40,7 +40,7 @@ messages = {
 }
 function loadEntityByInput() {
     let entity = {
-        id: $("#hdf_id").val(),
+        id: isNullOrEmpty($("#hdf_id").val()) ? null : $("#hdf_id").val(),
         email: $("#email").val(),
         userName: $("#userName").val(),
         password: $("#password").val(),

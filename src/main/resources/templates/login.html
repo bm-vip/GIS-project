@@ -13,9 +13,8 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/lib/bootstrap-rtl.min.css}" th:if="#{locale} == 'fa'"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/lib/font-awesome.min.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/lib/nprogress.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/lib/animate.min.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/lib/custom.min.css}"/>
-    <style>
+    <link rel="stylesheet" type="text/css" th:href="'/css/lib/custom.' + #{locale} + '.min.css'"/>
+    <style th:if="#{locale} == 'fa'">
         @font-face {
             font-family: IRANSans-web;
             src: url(/css/fonts/IRANSansWeb.eot);

@@ -5,13 +5,13 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd"
         objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
-    <changeSet id="1-1" author="b.mohamadi">
+    <changeSet id="1-1" author="administrator">
         <createSequence incrementBy="1" sequenceName="seq_company" startValue="1"/>
     </changeSet>
-    <changeSet id="1-2" author="b.mohamadi">
+    <changeSet id="1-2" author="administrator">
         <createSequence incrementBy="1" sequenceName="seq_station" startValue="1"/>
     </changeSet>
-    <changeSet id="1-3" author="b.mohamadi">
+    <changeSet id="1-3" author="administrator">
         <createTable tableName="tbl_company">
             <column name="id" type="bigint">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_tbl_company"/>
@@ -30,7 +30,7 @@
             <column name="deleted" type="boolean" defaultValue="0"></column>
         </createTable>
     </changeSet>
-    <changeSet id="1-4" author="b.mohamadi">
+    <changeSet id="1-4" author="administrator">
         <createTable tableName="tbl_station">
             <column name="id" type="bigint">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_tbl_station"/>
@@ -53,19 +53,18 @@
                 <constraints nullable="false"/>
             </column>
             <column name="deleted" type="boolean" defaultValue="0"></column>
+            <column name="location" type="geometry(Point, 4326)"/>
         </createTable>
     </changeSet>
-    <changeSet id="1-5" author="b.mohamadi">
+    <changeSet id="1-5" author="administrator">
         <addForeignKeyConstraint baseColumnNames="parent_company_id" baseTableName="tbl_company"
-                                 constraintName="FK_TBL_PARENT_COMPANY_ID" referencedColumnNames="id"
+                                 constraintName="fk_tbl_parent_company_id" referencedColumnNames="id"
+                                 referencedTableName="tbl_company"/>
+        <addForeignKeyConstraint baseColumnNames="company_id" baseTableName="tbl_station"
+                                 constraintName="fk_tbl_station_on_company" referencedColumnNames="id"
                                  referencedTableName="tbl_company"/>
     </changeSet>
     <changeSet id="1-6" author="b.mohamadi">
-        <addForeignKeyConstraint baseColumnNames="company_id" baseTableName="tbl_station"
-                                 constraintName="FK_TBL_STATION_ON_COMPANY" referencedColumnNames="id"
-                                 referencedTableName="tbl_company"/>
-    </changeSet>
-    <changeSet id="1-7" author="b.mohamadi">
         <sql endDelimiter="/">
             CREATE OR REPLACE FUNCTION fn_update_location_trigger()
             RETURNS TRIGGER AS $$
