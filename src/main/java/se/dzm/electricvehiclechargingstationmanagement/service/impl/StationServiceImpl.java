@@ -50,7 +50,7 @@ public class StationServiceImpl extends BaseServiceImpl<StationFilter,StationMod
     }
     @Override
     public Page<StationModel> findClosestByGeoPoint(Long companyId, double latitude, double longitude, double maxDistance, Pageable pageable) {
-        var location = CoordinateUtil.fromLatLong(longitude, latitude);
-        return stationRepository.findAllByGeoPoint(companyId,location, maxDistance, pageable);
+        var location = CoordinateUtil.fromLatLong(latitude, longitude);
+        return stationRepository.findAllByGeoPoint(companyId, location, maxDistance, pageable);
     }
 }

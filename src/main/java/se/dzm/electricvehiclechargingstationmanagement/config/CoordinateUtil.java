@@ -5,6 +5,7 @@ import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.PrecisionModel;
 
 public class CoordinateUtil {
+    private CoordinateUtil() {}
     private static final GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 4326);
     public static Point fromLatLong(double latitude, double longitude) {
         var point = geometryFactory.createPoint(new Coordinate(longitude, latitude));

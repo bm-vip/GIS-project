@@ -45,7 +45,7 @@ function submitForm(form) {
     $.blockUI(blockUiOptions());
     $.ajax({
         type: "GET",
-        url: ajaxUrl + "/findClosest-by-geopoint?latitude={0}&longitude={1}&maxDistance={2}&page={3}&size={4}".format($("#latitude").val(),$("#longitude").val(),$("#distance").val(),0,offlineDataTable.page.len()),
+        url: ajaxUrl + "/findClosest-by-geopoint?latitude={0}&longitude={1}&maxDistance={2}&page={3}&size={4}".format($("#latitude").val(),$("#longitude").val(),parseFloat($("#distance").val())*1000.0,0,offlineDataTable.page.len()),
         dataType: "json",
         contentType: "application/json;charset=utf-8",
         data: { companyId: $("#companySelect2").val() },
